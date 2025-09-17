@@ -82,6 +82,9 @@
               }
             ],
             "styles": [
+              "node_modules/@primeuix/themes/lara/lara-light-blue/theme.css",
+              "node_modules/primeng/resources/primeng.css",
+              "node_modules/primeicons/primeicons.css",
               "src/styles.css"
             ]
           }

@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: #b1daf5;
+  color: #2c3e50;
+}
+
+.p-menubar {
+  background: linear-gradient(90deg, #2a6f97, #468faf);
+  border: none;
+}
+
+.p-sidebar {
+  background: #e0f0f8;
+}
+
+footer {
+  background: #2a6f97;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+}

@@ -1,0 +1,6 @@
+.content {
+  padding: 1rem;
+  min-height: calc(100vh - 120px); /* header 64 + footer 56 */
+  background: #ffffff;
+  overflow-y: auto;
+}

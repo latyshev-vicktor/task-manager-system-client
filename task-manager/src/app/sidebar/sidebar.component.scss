@@ -1,0 +1,30 @@
+:host { display:block; }
+
+/* можно контролировать ширину через CSS-переменную (поддержка p-drawer) */
+.sidebar-wrapper {
+  --p-drawer-width: 280px;
+}
+
+.sidebar {
+  padding: 1rem;
+  background: #f0faff;
+  height: 100%;
+}
+
+.sidebar-header h2 {
+  margin: 0 0 1rem 0;
+  color: #1e3a8a;
+  font-size: 1.1rem;
+}
+
+.sidebar-menu { display:flex; flex-direction:column; gap: 0.5rem; }
+
+.menu-item {
+  display:block;
+  padding: 0.6rem 0.5rem;
+  border-radius: 8px;
+  color: #1e3a8a;
+  text-decoration:none;
+}
+
+.menu-item:hover { background:#dbeafe; color:#0f172a; }
