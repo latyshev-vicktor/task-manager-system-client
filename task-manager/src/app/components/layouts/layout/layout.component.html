@@ -1,0 +1,28 @@
+<tui-root>
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <app-sidebar 
+      [isCollapsed]="sidebarCollapsed"
+      (toggleSidebar)="onToggleSidebar()">
+    </app-sidebar>
+
+    <!-- Main Content Area -->
+    <div class="main-content" [class.sidebar-collapsed]="sidebarCollapsed">
+      <!-- Top Navigation Bar -->
+      <app-navbar 
+        [pageTitle]="currentPageTitle"
+        (menuToggle)="onToggleSidebar()">
+      </app-navbar>
+
+      <!-- Content Area -->
+      <main class="content">
+        <div class="content-wrapper">
+          <router-outlet></router-outlet>
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <!-- <app-footer></app-footer> -->
+    </div>
+  </div>
+</tui-root>

@@ -1,0 +1,91 @@
+<header class="navbar">
+  <!-- Left Side -->
+  <div class="navbar-left">
+    <button 
+      tuiButton 
+      type="button" 
+      appearance="flat" 
+      size="s"
+      (click)="onMenuToggle()"
+      class="menu-toggle"
+      title="Переключить меню">
+      <lucide-icon [img]="Menu" size="20"></lucide-icon>
+    </button>
+    
+    <h1 class="page-title">{{ pageTitle }}</h1>
+    
+    <nav class="breadcrumb" *ngIf="breadcrumbs.length > 0">
+      <span 
+        *ngFor="let crumb of breadcrumbs; let last = last" 
+        class="breadcrumb-item"
+        [class.active]="last">
+        {{ crumb }}
+        <lucide-icon 
+          *ngIf="!last" 
+          [img]="ChevronRight" 
+          size="16"
+          class="breadcrumb-separator">
+        </lucide-icon>
+      </span>
+    </nav>
+  </div>
+  
+  <!-- Right Side -->
+  <div class="navbar-right">
+    <!-- Search -->
+    <button 
+      tuiButton 
+      type="button" 
+      appearance="flat" 
+      size="s" 
+      class="nav-action"
+      title="Поиск">
+      <lucide-icon [img]="Search" size="18"></lucide-icon>
+    </button>
+    
+    <!-- Notifications -->
+    <button 
+      tuiButton 
+      type="button" 
+      appearance="flat" 
+      size="s" 
+      class="nav-action notification-btn"
+      title="Уведомления">
+      <lucide-icon [img]="Bell" size="18"></lucide-icon>
+      <span *ngIf="notificationCount > 0" class="notification-badge">
+        {{ notificationCount > 99 ? '99+' : notificationCount }}
+      </span>
+    </button>
+    
+    <!-- Quick Add -->
+    <button 
+      tuiButton 
+      type="button" 
+      appearance="primary" 
+      size="s" 
+      class="quick-add-btn"
+      title="Быстрое добавление">
+      <lucide-icon [img]="Plus" size="16"></lucide-icon>
+      <span class="quick-add-text">Добавить</span>
+    </button>
+    
+    <!-- User Menu -->
+    <div class="user-menu">
+      <button 
+        tuiButton 
+        type="button" 
+        appearance="secondary" 
+        size="s" 
+        class="user-button">
+        <div class="user-avatar">
+          <lucide-icon [img]="User" size="16"></lucide-icon>
+        </div>
+        <div class="user-info">
+          <span class="user-name">{{ currentUser.name }}</span>
+          <span class="user-role">{{ currentUser.role }}</span>
+        </div>
+        <lucide-icon [img]="ChevronDown" size="16" class="user-dropdown-icon"></lucide-icon>
+      </button>
+    </div>
+  </div>
+</header>

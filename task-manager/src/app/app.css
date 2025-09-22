@@ -1,0 +1,5 @@
+h1 {
+  color: var(--tui-text-01);
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}

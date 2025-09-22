@@ -1,16 +1,16 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
-
+import {provideEventPlugins} from '@taiga-ui/event-plugins';
 import { routes } from './app.routes';
-import { providePrimeNG } from 'primeng/config';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { NG_EVENT_PLUGINS } from '@taiga-ui/event-plugins';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideAnimationsAsync(),
-    providePrimeNG()
+    provideEventPlugins(),
+    NG_EVENT_PLUGINS
   ]
 };
+

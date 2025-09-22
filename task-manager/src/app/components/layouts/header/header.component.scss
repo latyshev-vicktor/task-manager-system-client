@@ -1,0 +1,201 @@
+.navbar {
+  height: 64px;
+  background-color: var(--tui-base-01);
+  border-bottom: 1px solid var(--tui-base-03);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+/* Left Side */
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+}
+
+.menu-toggle {
+  padding: 0.5rem;
+  color: var(--tui-text-02);
+}
+
+.menu-toggle:hover {
+  color: var(--tui-text-01);
+  background-color: var(--tui-base-03);
+}
+
+.page-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--tui-text-01);
+  margin: 0;
+  white-space: nowrap;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: 1rem;
+}
+
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--tui-text-03);
+  font-size: 0.875rem;
+}
+
+.breadcrumb-item.active {
+  color: var(--tui-text-02);
+  font-weight: 500;
+}
+
+.breadcrumb-separator {
+  width: 16px;
+  height: 16px;
+  color: var(--tui-text-04);
+}
+
+/* Right Side */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-action {
+  padding: 0.5rem;
+  color: var(--tui-text-02);
+  position: relative;
+}
+
+.nav-action:hover {
+  color: var(--tui-text-01);
+  background-color: var(--tui-base-03);
+}
+
+.notification-btn {
+  position: relative;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background-color: var(--tui-status-negative);
+  color: white;
+  font-size: 0.625rem;
+  font-weight: 600;
+  padding: 0.125rem 0.25rem;
+  border-radius: 10px;
+  min-width: 16px;
+  text-align: center;
+  line-height: 1;
+  border: 2px solid var(--tui-base-01);
+}
+
+.quick-add-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+}
+
+.quick-add-text {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* User Menu */
+.user-menu {
+  margin-left: 0.5rem;
+}
+
+.user-button {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 1rem;
+  max-width: 200px;
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  background-color: var(--tui-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-shrink: 0;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.user-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--tui-text-01);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100px;
+}
+
+.user-role {
+  font-size: 0.75rem;
+  color: var(--tui-text-03);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100px;
+}
+
+.user-dropdown-icon {
+  width: 16px;
+  height: 16px;
+  color: var(--tui-text-03);
+  flex-shrink: 0;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .breadcrumb {
+    display: none;
+  }
+  
+  .user-info {
+    display: none;
+  }
+  
+  .quick-add-text {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 1rem;
+  }
+  
+  .page-title {
+    font-size: 1.25rem;
+  }
+  
+  .navbar-right {
+    gap: 0.25rem;
+  }
+}

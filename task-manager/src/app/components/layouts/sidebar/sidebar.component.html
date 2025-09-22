@@ -1,0 +1,55 @@
+<aside class="sidebar" [class.collapsed]="isCollapsed">
+  <!-- Sidebar Header -->
+  <div class="sidebar-header">
+    <div class="logo" *ngIf="!isCollapsed">
+      <div class="logo-icon">
+        <lucide-icon [img]="ClipboardList" size="24"></lucide-icon>
+      </div>
+      <span class="logo-text">TaskManager</span>
+    </div>
+    <div 
+      *ngIf="isCollapsed" 
+      class="logo-collapsed">
+      <lucide-icon [img]="ClipboardList" size="24"></lucide-icon>
+    </div>
+  </div>
+  
+  <!-- Navigation Menu -->
+  <nav class="sidebar-nav">
+    <ul class="nav-list">
+      <li class="nav-item" *ngFor="let item of navigationItems">
+        <a 
+          [routerLink]="item.path"
+          routerLinkActive="active"
+          class="nav-link"
+          [title]="isCollapsed ? item.label : ''">
+          <button tuiButton type="button" appearance="flat" size="m" class="nav-button">
+            <lucide-icon [img]="item.icon" size="20" class="nav-icon"></lucide-icon>
+            <span *ngIf="!isCollapsed" class="nav-label">{{ item.label }}</span>
+            <span *ngIf="!isCollapsed && item.badge" class="nav-badge">{{ item.badge }}</span>
+          </button>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Sidebar Footer -->
+  <div class="sidebar-footer">
+    <div class="sidebar-settings" *ngIf="!isCollapsed">
+      <button tuiButton type="button" appearance="flat" size="s" class="settings-button">
+        <lucide-icon [img]="Settings" size="18"></lucide-icon>
+        <span>Настройки</span>
+      </button>
+    </div>
+    <button 
+      *ngIf="isCollapsed"
+      tuiButton 
+      type="button" 
+      appearance="flat" 
+      size="s" 
+      class="settings-button-collapsed"
+      title="Настройки">
+      <lucide-icon [img]="Settings" size="18"></lucide-icon>
+    </button>
+  </div>
+</aside>
