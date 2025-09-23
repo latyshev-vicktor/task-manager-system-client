@@ -1,0 +1,41 @@
+<div class="sprint-page">
+  <div class="header">
+    <h2>Спринты</h2>
+    <button tuiButton appearance="primary" size="s" (click)="createSprint()">
+      Новый
+    </button>
+  </div>
+
+	<tui-textfield iconStart="@tui.search">
+    <input
+      tuiTextfield
+      [(ngModel)]="search"/>
+  </tui-textfield>
+
+  <div class="sprint-grid">
+    @for (sprint of filteredSprints; track sprint.id) {
+      <div
+        tuiAppearance="floating"
+        tuiCardLarge
+        class="sprint-card"
+        (click)="openSprintDetails(sprint)"
+      >
+        <header tuiHeader>
+          <h3 tuiTitle>
+            {{ sprint.name }}
+            <span tuiSubtitle>{{ sprint.sprintStatus.name }}</span>
+          </h3>
+        </header>
+
+        <p>{{ sprint.description }}</p>
+
+        <footer>
+          <span>
+            {{ sprint.startDate | date : 'dd.MM.yyyy' }} –
+            {{ sprint.endDate | date : 'dd.MM.yyyy' }}
+          </span>
+        </footer>
+      </div>
+    }
+  </div>
+</div>

@@ -19,7 +19,7 @@ import { HeaderComponent } from "../header/header.component";
 })
 export class LayoutComponent {
   sidebarCollapsed = false;
-  currentPageTitle = 'Dashboard';
+  currentPageTitle = '';
 
   onToggleSidebar(): void {
     this.sidebarCollapsed = !this.sidebarCollapsed;

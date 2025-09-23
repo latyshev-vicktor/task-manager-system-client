@@ -2,12 +2,12 @@ import { BaseFilterModel } from "../base-filter.model";
 import { BaseModel } from "../base.model";
 import { TargetModel } from "../target/target.model";
 
-export interface FieldActivtyModel extends BaseModel {
+export interface FieldActivityModel extends BaseModel {
   name: string;
   userId?: number;
 }
 
-export interface FieldActivityForSprintModel extends FieldActivtyModel {
+export interface FieldActivityForSprintModel extends FieldActivityModel {
   targets: TargetModel[];
 }
 

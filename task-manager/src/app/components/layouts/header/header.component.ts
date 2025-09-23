@@ -15,7 +15,7 @@ import { LucideAngularModule, Menu, Search, Bell, Plus, ChevronDown, ChevronRigh
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  @Input() pageTitle = 'Dashboard';
+  @Input() pageTitle = '';
   @Output() menuToggle = new EventEmitter<void>();
 
   readonly Menu = Menu;
