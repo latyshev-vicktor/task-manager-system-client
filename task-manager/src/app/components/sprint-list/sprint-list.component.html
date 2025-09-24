@@ -1,12 +1,12 @@
 <div class="sprint-page">
   <div class="header">
-    <h2>Спринты</h2>
+    <h2>Мои спринты</h2>
     <button tuiButton appearance="primary" size="s" (click)="createSprint()">
       Новый
     </button>
   </div>
 
-	<tui-textfield iconStart="@tui.search">
+  <tui-textfield iconStart="@tui.search">
     <input
       tuiTextfield
       [(ngModel)]="search"/>
@@ -27,7 +27,11 @@
           </h3>
         </header>
 
-        <p>{{ sprint.description }}</p>
+        <p class="sprint-card-description"
+          [tuiHint]="sprint.description"
+          tuiHintDirection="bottom">
+          {{ sprint.description }}
+        </p>
 
         <footer>
           <span>
@@ -39,3 +43,4 @@
     }
   </div>
 </div>
+
