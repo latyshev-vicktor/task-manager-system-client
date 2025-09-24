@@ -1,3 +1,78 @@
+.sprint-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  height: calc(100vh - 120px);
+  overflow: hidden;
+}
+
+.sprint-column {
+  display: flex;
+  flex-direction: column;
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 16px;
+  overflow-y: auto;
+
+  h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .column-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+.sprint-card {
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  background: #fff;
+  transition: box-shadow 0.2s ease;
+
+  h4 {
+    font-size: 15px;
+    margin: 0 0 4px;
+    font-weight: 600;
+  }
+
+  .description {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 6px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  small {
+    font-size: 12px;
+    color: #999;
+  }
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+}
+
+/* Акценты по статусу */
+.sprint-column.created h3 {
+  color: #ff9800;
+}
+.sprint-column.active h3 {
+  color: #4caf50;
+}
+.sprint-column.done h3 {
+  color: #2196f3;
+}
+
+
 .sprint-page {
   display: flex;
   flex-direction: column;
@@ -13,7 +88,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 1rem;
-    overflow-y: visible
+    overflow-y: visible;
   }
 
   .sprint-card {
@@ -25,10 +100,10 @@
     }
   }
 
-  .sprint-card-description {
-    display: -webkit-box;
-    -webkit-line-clamp: 2; /* сколько строк оставить */
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
+  // .sprint-card-description {
+  //   display: -webkit-box;
+  //   -webkit-line-clamp: 2; /* сколько строк оставить */
+  //   -webkit-box-orient: vertical;
+  //   overflow: hidden;
+  // }
 }

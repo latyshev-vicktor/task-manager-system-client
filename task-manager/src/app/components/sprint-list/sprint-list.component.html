@@ -1,4 +1,99 @@
-<div class="sprint-page">
+<div class="sprint-board">
+  <!-- Статус Созданно -->
+   <div class="sprint-column created">
+    <h3>Созданные</h3>
+    <div class="column-content">
+      @for (sprint of created; track sprint.id) {
+        <div
+          tuiAppearance="floating"
+          tuiCardLarge
+          class="sprint-card"
+          (click)="openSprintDetails(sprint)">
+          <header tuiHeader>
+            <h3 tuiTitle>
+              {{ sprint.name }}
+            </h3>
+          </header>
+
+          <p class="sprint-card-description">
+            {{ sprint.description }}
+          </p>
+
+          <footer>
+            <span>
+              {{ sprint.startDate | date : 'dd.MM.yyyy' }} –
+              {{ sprint.endDate | date : 'dd.MM.yyyy' }}
+            </span>
+          </footer>
+        </div>
+      }
+    </div>
+   </div>
+
+   <!-- Статус В работе -->
+   <div class="sprint-column active">
+    <h3>В работе</h3>
+    <div class="column-content">
+      @for (sprint of active; track sprint.id) {
+        <div
+          tuiAppearance="floating"
+          tuiCardLarge
+          class="sprint-card"
+          (click)="openSprintDetails(sprint)">
+          <header tuiHeader>
+            <h3 tuiTitle>
+              {{ sprint.name }}
+            </h3>
+          </header>
+
+          <p class="sprint-card-description">
+            {{ sprint.description }}
+          </p>
+
+          <footer>
+            <span>
+              {{ sprint.startDate | date : 'dd.MM.yyyy' }} –
+              {{ sprint.endDate | date : 'dd.MM.yyyy' }}
+            </span>
+          </footer>
+        </div>
+      }
+    </div>
+   </div>
+
+   <!-- Статус Завершено -->
+   <div class="sprint-column done">
+    <h3>Завершеные</h3>
+    <div class="column-content">
+      @for (sprint of done; track sprint.id) {
+        <div
+          tuiAppearance="floating"
+          tuiCardLarge
+          class="sprint-card"
+          (click)="openSprintDetails(sprint)">
+          <header tuiHeader>
+            <h3 tuiTitle>
+              {{ sprint.name }}
+            </h3>
+          </header>
+
+          <p class="sprint-card-description">
+            {{ sprint.description }}
+          </p>
+
+          <footer>
+            <span>
+              {{ sprint.startDate | date : 'dd.MM.yyyy' }} –
+              {{ sprint.endDate | date : 'dd.MM.yyyy' }}
+            </span>
+          </footer>
+        </div>
+      }
+    </div>
+   </div>
+</div>
+
+<!-- <div class="sprint-page">
   <div class="header">
     <h2>Мои спринты</h2>
     <button tuiButton appearance="primary" size="s" (click)="createSprint()">
@@ -42,5 +137,5 @@
       </div>
     }
   </div>
-</div>
+</div> -->
 
