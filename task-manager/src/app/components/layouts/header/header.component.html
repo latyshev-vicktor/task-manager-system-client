@@ -1,5 +1,4 @@
 <header class="navbar">
-  <!-- Left Side -->
   <div class="navbar-left">
     <button 
       tuiButton 
@@ -14,25 +13,26 @@
     
     <h1 class="page-title">{{ pageTitle }}</h1>
     
-    <nav class="breadcrumb" *ngIf="breadcrumbs.length > 0">
-      <span 
-        *ngFor="let crumb of breadcrumbs; let last = last" 
-        class="breadcrumb-item"
-        [class.active]="last">
-        {{ crumb }}
-        <lucide-icon 
-          *ngIf="!last" 
-          [img]="ChevronRight" 
-          size="16"
-          class="breadcrumb-separator">
-        </lucide-icon>
-      </span>
-    </nav>
+    @if(breadcrumbs.length > 0) {
+      <nav class="breadcrumb">
+        <span 
+          *ngFor="let crumb of breadcrumbs; let last = last" 
+          class="breadcrumb-item"
+          [class.active]="last">
+          {{ crumb }}
+          @if(!last) {
+            <lucide-icon
+              [img]="ChevronRight" 
+              size="16"
+              class="breadcrumb-separator">
+            </lucide-icon>
+          }
+        </span>
+      </nav>
+    }
   </div>
   
-  <!-- Right Side -->
   <div class="navbar-right">
-    <!-- Search -->
     <button 
       tuiButton 
       type="button" 
@@ -43,7 +43,6 @@
       <lucide-icon [img]="Search" size="18"></lucide-icon>
     </button>
     
-    <!-- Notifications -->
     <button 
       tuiButton 
       type="button" 
@@ -52,25 +51,27 @@
       class="nav-action notification-btn"
       title="Уведомления">
       <lucide-icon [img]="Bell" size="18"></lucide-icon>
-      <span *ngIf="notificationCount > 0" class="notification-badge">
-        {{ notificationCount > 99 ? '99+' : notificationCount }}
-      </span>
+      @if(notificationCount > 0) {
+        <span class="notification-badge">
+          {{ notificationCount > 99 ? '99+' : notificationCount }}
+        </span>
+      }
     </button>
     
     <!-- User Menu -->
     <div class="user-menu">
       <button 
-        tuiButton 
+        tuiButton
         type="button" 
         appearance="primary" 
-        size="m" 
+        size="l" 
         class="user-button">
         <div class="user-avatar">
           <lucide-icon [img]="User" size="20"></lucide-icon>
         </div>
-        <div class="user-info">
-          <span class="user-name">{{ currentUser.name }}</span>
-          <span class="user-role">{{ currentUser.role }}</span>
+        <div class="user-info" *ngIf="user$ | async as user">
+          <span class="user-name">{{ user.firstName }} {{ user.lastName }}</span>
+          <span class="user-email">{{ user.email }}</span>
         </div>
         <lucide-icon [img]="ChevronDown" size="16" class="user-dropdown-icon"></lucide-icon>
       </button>

@@ -33,15 +33,14 @@ export class SidebarComponent {
 
   navigationItems: NavigationItem[] = [
     {
-      path: '/dashboard',
-      label: 'Дашборд',
+      path: '/sprint-list',
+      label: 'Спринты',
       icon: Home
     },
     {
-      path: '/tasks',
-      label: 'Задачи',
-      icon: CheckSquare,
-      badge: 12
+      path: '/field-activities',
+      label: 'Сферы деятельности',
+      icon: CheckSquare
     },
     {
       path: '/projects',
