@@ -33,8 +33,10 @@ export const authInterceptor: HttpInterceptorFn = (
 
   // Добавляем токен если есть
   if (accessToken) {
-    authReq = addTokenHeader(req, accessToken);
+    authReq = addTokenHeader(authReq, accessToken);
   }
+
+  authReq = addCoockie(authReq);
 
   // Если URL относительный — добавляем gateway
   if (!authReq.url.startsWith('http')) {
@@ -54,7 +56,6 @@ export const authInterceptor: HttpInterceptorFn = (
   );
 };
 
-// ✅ Добавляем токен в заголовок
 function addTokenHeader(
   request: HttpRequest<any>,
   token: string
@@ -64,7 +65,15 @@ function addTokenHeader(
   });
 }
 
-// ✅ Обработка 401 ошибок и обновление токена
+function addCoockie(
+  request: HttpRequest<any>
+): HttpRequest<any> {
+  return request.clone({
+    withCredentials: true
+  });
+}
+
+
 function handle401Error(
   request: HttpRequest<any>,
   next: HttpHandlerFn,

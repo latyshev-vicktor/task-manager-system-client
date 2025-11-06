@@ -1,0 +1,36 @@
+<section class="container">
+  <header class="header">
+    <h2 tuiTitle="m">Сферы деятельности</h2>
+    <button 
+      tuiButton 
+      appearance="outline" 
+      size="s" 
+      [disabled]="loading">
+      <lucide-icon [img]="Plus" size="18"></lucide-icon>
+      Добавить</button>
+  </header>
+
+  @if(loading) {
+    <tui-loader size="l" [overlay]="true"></tui-loader>
+  } @else {
+    <div class="content">
+      @for (activity of models; track activity.id) {
+        <div tuiCardMedium tuiSurface="floating" class="card">
+          <h2 tuiTitle>{{activity.name}}</h2>
+          <div>
+            <button tuiButton size="s" appearance="secondary">
+              <lucide-icon [img]="Edit" size="18"></lucide-icon></button>
+            <button 
+              tuiButton
+              size="s" 
+              appearance="negative" 
+              style="margin-left: 5px;"
+              (click)="deleteFieldActivity(activity.id, activity.name)">
+              <lucide-icon [img]="Trash" size="18"></lucide-icon>
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</section>
