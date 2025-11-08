@@ -42,7 +42,6 @@ export class AuthStore {
   login(email: string | null, password: string | null) {
     return this.authService.login(email, password).pipe(
       tap(res => {
-        debugger;
         store.update(state => ({
           ...state,
           accessToken: res.accessToken,

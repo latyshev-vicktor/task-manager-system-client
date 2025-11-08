@@ -20,7 +20,6 @@ export class AuthService {
   login(email: string | null, password: string | null): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this._baseUrl}/login`, { email, password }).pipe(
       tap((res) => {
-        debugger;
         localStorage.setItem(this.accessTokenKey, res.accessToken);
         this.accessToken$.next(res.accessToken);
       })

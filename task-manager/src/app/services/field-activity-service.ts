@@ -16,6 +16,10 @@ export class FieldActivityService {
     return this.http.post<number>(`${this._baseUrl}`, {name: name});
   }
 
+  update(model: FieldActivityModel) : Observable<number> {
+    return this.http.put<number>(`${this._baseUrl}`, model);
+  }
+
   delete(id: number) : Observable<void> {
     return this.http.delete<void>(`${this._baseUrl}/${id}`);
   }

@@ -1,11 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TuiButton, TuiLoader, TuiTitle, TuiSurface, TuiIcon, TuiAppearance, TuiDialogService, TuiAlertService } from '@taiga-ui/core';
-import { TuiCardLarge, TuiCardMedium } from '@taiga-ui/layout';
+import { TuiButton, TuiLoader, TuiTitle, TuiAppearance, TuiDialogService, TuiAlertService } from '@taiga-ui/core';
+import { TuiCardMedium } from '@taiga-ui/layout';
 import { FieldActivityModel } from '../../../models/field-activity/field-activity.model';
 import { FieldActivityService } from '../../../services/field-activity-service';
 import { LucideAngularModule, Plus, Edit, Trash2 } from 'lucide-angular';
 import {TUI_CONFIRM, type TuiConfirmData} from '@taiga-ui/kit';
+import { FieldActivityDialogComponent } from '../view/field-activity-dialog.component';
+import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 
 @Component({
   selector: 'app-field-activities',
@@ -16,13 +18,11 @@ import {TUI_CONFIRM, type TuiConfirmData} from '@taiga-ui/kit';
     CommonModule,
     TuiButton,
     TuiLoader,
-    TuiIcon,
-    TuiCardLarge,
     TuiCardMedium,
     TuiTitle,
     LucideAngularModule,
-    TuiAppearance,
-],
+    TuiAppearance  
+  ],
 })
 export class FieldActivitiesListComponent implements OnInit {
   private readonly service = inject(FieldActivityService);
@@ -80,5 +80,37 @@ export class FieldActivitiesListComponent implements OnInit {
         this.load();
       });
     })
+  }
+
+  openEditDialog(activity: FieldActivityModel) {
+    this.dialogs
+      .open<FieldActivityModel>(new PolymorpheusComponent(FieldActivityDialogComponent), {
+        data: activity,
+        label: 'Редактирование',
+        size: 'm'
+      })
+      .subscribe(result => {
+        if (result) {
+          this.service.update(result).subscribe(id => {
+            this.load();
+          });
+        }
+      });
+  }
+
+  openCreateDialog() {
+    this.dialogs
+      .open<FieldActivityModel>(new PolymorpheusComponent(FieldActivityDialogComponent), {
+        data: null,
+        label: 'Создание',
+        size: 'm'
+      })
+      .subscribe(result => {
+        if (result) {
+          this.service.create(result.name).subscribe(id => {
+            this.load();
+          });
+        }
+      });
   }
 } 

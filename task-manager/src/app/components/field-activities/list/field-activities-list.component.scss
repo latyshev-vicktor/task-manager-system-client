@@ -30,8 +30,17 @@
 
 .card {
   background-color: rgb(227, 239, 239);
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
   width: 10rem;
   height: 10rem;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
 }
 
 .content {
