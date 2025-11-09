@@ -4,8 +4,8 @@ import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TuiButton, TuiAppearance, TuiHint, TuiTextfield, TuiScrollbar } from '@taiga-ui/core';
 import { TuiCardLarge } from '@taiga-ui/layout';
-import { SprintModel } from '../../models/sprint/sprint.model';
-import { AuthService } from '../../services/auth-service';
+import { SprintModel } from '../../../models/sprint/sprint.model';
+import { AuthService } from '../../../services/auth-service';
 import { LucideAngularModule, Plus } from 'lucide-angular';
 
 @Component({
@@ -31,6 +31,7 @@ export class SprintListComponent implements OnInit {
   ngOnInit(): void {
     
   }
+  
   router = inject(Router);
   authService = inject(AuthService);
 

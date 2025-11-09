@@ -21,8 +21,7 @@ export interface CreateSprintModel {
   name: string;
   description: string;
   fieldActivityIds: number[];
-  startDate: Date;
-  endDate: Date;
+  weekCount: number;
 }
 
 export interface SprintFilterModel extends BaseFilterModel {
