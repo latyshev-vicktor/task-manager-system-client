@@ -6,6 +6,7 @@ import { TuiButton, TuiAppearance, TuiHint, TuiTextfield, TuiScrollbar } from '@
 import { TuiCardLarge } from '@taiga-ui/layout';
 import { SprintModel } from '../../models/sprint/sprint.model';
 import { AuthService } from '../../services/auth-service';
+import { LucideAngularModule, Plus } from 'lucide-angular';
 
 @Component({
   selector: 'app-sprint-list',
@@ -18,12 +19,15 @@ import { AuthService } from '../../services/auth-service';
     TuiAppearance,
     DatePipe,
     TuiHint,
-    TuiScrollbar
+    TuiScrollbar,
+    LucideAngularModule
 ],
   templateUrl: './sprint-list.component.html',
   styleUrl: './sprint-list.component.scss'
 }) 
 export class SprintListComponent implements OnInit {
+  readonly Plus = Plus;
+
   ngOnInit(): void {
     
   }
