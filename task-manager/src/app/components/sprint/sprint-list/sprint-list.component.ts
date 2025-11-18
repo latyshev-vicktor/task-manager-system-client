@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { TuiButton, TuiAppearance, TuiHint, TuiTextfield, TuiScrollbar, TuiDialogService } from '@taiga-ui/core';
+import { TuiButton, TuiAppearance, TuiHint, TuiTextfield, TuiScrollbar, TuiDialogService, TuiTitle } from '@taiga-ui/core';
 import { TuiCardLarge } from '@taiga-ui/layout';
 import { SprintModel } from '../../../models/sprint/sprint.model';
 import { AuthService } from '../../../services/auth-service';
@@ -23,6 +23,7 @@ import { SprintService } from '../../../services/sprint-service';
     DatePipe,
     TuiHint,
     TuiScrollbar,
+    TuiTitle,
     LucideAngularModule
 ],
   templateUrl: './sprint-list.component.html',
