@@ -34,6 +34,10 @@ export class SprintListComponent implements OnInit {
   private readonly dialogs = inject(TuiDialogService);
 
   ngOnInit(): void {
+    this.loadSprints();
+  }
+
+  loadSprints() {
     this.sprintService.search({take: 1000, skip: 0}).subscribe(data => {
       this.sprints = data.data;
     })
@@ -66,7 +70,7 @@ export class SprintListComponent implements OnInit {
   }
 
   openSprintDetails(sprint: SprintModel) {
-    this.router.navigate(['/sprints', sprint.id]);
+    this.router.navigate(['/sprint', sprint.id]);
   }
 
   createSprint() {
@@ -76,7 +80,7 @@ export class SprintListComponent implements OnInit {
         size: 'l'
       })
       .subscribe(result => {
-        console.log(`Спринт с id ${result}`);
+        this.loadSprints();
       });
   }
 }

@@ -1,7 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-import { CreateSprintModel } from '../models/sprint/sprint.model';
+import { CreateSprintModel, SprintModel } from '../models/sprint/sprint.model';
+import { TargetModel } from '../models/target/target.model';
+import { ThumbsDown } from 'lucide-angular';
+import { SprintWeekModel } from '../models/sprint-week/sprint-week.model';
 
 @Injectable({ providedIn: 'root' })
 export class SprintService {
@@ -14,5 +17,17 @@ export class SprintService {
 
   search(filter: any) {
     return this.http.post<any>(`${this._baseUrl}/search`, filter);
+  }
+
+  getById(id: number) : Observable<SprintModel | null> {
+    return this.http.get<SprintModel | null>(`${this._baseUrl}/${id}`);
+  }
+
+  getTargetsBySprintId(sprintId: number) : Observable<TargetModel[]> {
+    return this.http.get<TargetModel[] | []>(`${this._baseUrl}/${sprintId}/targets`)
+  }
+
+  getWeeksBySprintId(sprintId: number) : Observable<SprintWeekModel[]> {
+    return this.http.get<SprintWeekModel[] | []>(`${this._baseUrl}/${sprintId}/weeks`)
   }
 }

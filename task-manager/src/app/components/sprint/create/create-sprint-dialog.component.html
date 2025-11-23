@@ -20,10 +20,6 @@
         [min]="2"
     ></textarea>
     </tui-textfield>
-    <!-- <tui-textfield [tuiTextfieldCleaner]="true">
-        <label tuiLabel>Описание</label>
-        <input formControlName="description" placeholder="Введите описание спринта" tuiTextfield />
-    </tui-textfield> -->
     <tui-error formControlName="description" [error]="[] | tuiFieldError | async"/>
     <label tuiLabel>
       <tui-textfield

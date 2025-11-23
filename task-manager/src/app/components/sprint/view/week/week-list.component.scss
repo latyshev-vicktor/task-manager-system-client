@@ -1,0 +1,28 @@
+.weeks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.week-card {
+  padding: 1.25rem;
+}
+
+.week-header {
+  //display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.tasks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.task {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}

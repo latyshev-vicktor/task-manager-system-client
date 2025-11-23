@@ -1,0 +1,21 @@
+<div class="weeks-grid">
+  @for (w of weeks; track w.id) {
+    <div tuiCardLarge tuiAppearance="positive" class="week-card">
+      <header tuiHeader>
+        <h3 tuiTitle>
+            Неделя {{w.weekNumber}}
+            <span tuiSubtitle>Срок: {{ w.startDate | date : 'dd.MM.yyyy' }} — {{ w.endDate | date : 'dd.MM.yyyy' }}</span>
+        </h3>
+      </header>
+
+      <div class="tasks">
+        @for (task of w.tasks; track task.id) {
+          <div class="task">
+            <input type="checkbox" [checked]="true" />
+            <span>{{ task.name }}</span>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>

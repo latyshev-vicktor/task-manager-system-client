@@ -1,0 +1,35 @@
+@if (sprint(); as sprint) {
+  <div class="page">
+    <div class="header">
+      <div class="header-row">
+        <div class="left">
+          <h1>{{ sprint.name }}</h1>
+
+          <tui-badge
+            tuiStatus
+            [appearance]="statusColor">
+            {{ sprint.sprintStatus.description }}
+          </tui-badge>
+        </div>
+
+        @if (sprint.sprintStatus.name !== 'Completed') {
+          <button
+            tuiButton
+            appearance="secondary"
+            size="m"
+            [iconStart]="'@tui.pen'">
+            Редактировать
+          </button>
+        }
+      </div>
+      <div class="meta">
+        <div><b>Начало:</b> {{ sprint.startDate | date : 'dd.MM.yyyy'}}</div>
+        <div><b>Окончание:</b> {{ sprint.endDate | date : 'dd.MM.yyyy' }}</div>
+      </div>
+      <p class="description">{{ sprint.description }}</p>
+    </div>
+
+    <app-targets-list class="block" [sprintId]="sprint.id" />
+    <app-weeks-list class="block" [sprintId]="sprint.id" />
+  </div>
+}
