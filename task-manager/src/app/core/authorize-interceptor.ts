@@ -6,6 +6,7 @@ import {
   HttpHandlerFn,
 } from '@angular/common/http';
 import { inject } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   BehaviorSubject,
   Observable,
@@ -14,8 +15,10 @@ import {
   switchMap,
   take,
   throwError,
+  finalize,
 } from 'rxjs';
 import { AuthService } from '../services/auth-service';
+import { TuiAlertService } from '@taiga-ui/core';
 
 const BASE_API_GATEWAY = 'https://localhost:7280';
 
@@ -27,81 +30,111 @@ export const authInterceptor: HttpInterceptorFn = (
   next: HttpHandlerFn
 ): Observable<HttpEvent<any>> => {
   const authService = inject(AuthService);
-  const accessToken = authService.getAccessToken();
+  const router = inject(Router);
+  const alertService = inject(TuiAlertService);
 
-  let authReq = req;
-
-  // Добавляем токен если есть
-  if (accessToken) {
-    authReq = addTokenHeader(authReq, accessToken);
-  }
-
-  authReq = addCoockie(authReq);
-
-  // Если URL относительный — добавляем gateway
-  if (!authReq.url.startsWith('http')) {
-    authReq = authReq.clone({
-      url: BASE_API_GATEWAY + authReq.url,
-    });
-  }
+  // Подготавливаем запрос
+  const authReq = prepareRequest(req, authService);
 
   // Обработка запроса и ошибок
   return next(authReq).pipe(
     catchError((error: any) => {
       if (error instanceof HttpErrorResponse && error.status === 401) {
-        return handle401Error(authReq, next, authService);
+        return handle401Error(authReq, next, authService, router);
       }
       return throwError(() => error);
     })
   );
 };
 
-function addTokenHeader(
-  request: HttpRequest<any>,
-  token: string
+function prepareRequest(
+  req: HttpRequest<any>,
+  authService: AuthService
 ): HttpRequest<any> {
-  return request.clone({
-    setHeaders: { Authorization: `Bearer ${token}` },
-  });
-}
+  let authReq = req;
 
-function addCoockie(
-  request: HttpRequest<any>
-): HttpRequest<any> {
-  return request.clone({
-    withCredentials: true
-  });
-}
+  // Добавляем base URL если URL относительный
+  if (!authReq.url.startsWith('http')) {
+    authReq = authReq.clone({
+      url: BASE_API_GATEWAY + authReq.url,
+    });
+  }
 
+  // Добавляем credentials для cookie
+  authReq = authReq.clone({
+    withCredentials: true,
+  });
+
+  // Добавляем токен если есть
+  let accessToken = authService.getAccessToken();
+  accessToken = null;
+  if (accessToken) {
+    authReq = authReq.clone({
+      setHeaders: { Authorization: `Bearer ${accessToken}` },
+    });
+  }
+
+  return authReq;
+}
 
 function handle401Error(
   request: HttpRequest<any>,
   next: HttpHandlerFn,
-  authService: AuthService
+  authService: AuthService,
+  router: Router
 ): Observable<HttpEvent<any>> {
-  if (!isRefreshing) {
-    isRefreshing = true;
-    refreshTokenSubject.next(null);
+  // Проверяем, не является ли это запросом на refresh
+  const isRefreshEndpoint = 
+    request.url.includes('/refresh') || 
+    request.url.includes('/api/auth/refresh');
 
-    return authService.refreshToken().pipe(
-      switchMap((res) => {
-        isRefreshing = false;
-        authService.setAccessToken(res.accessToken);
-        refreshTokenSubject.next(res.accessToken);
-        return next(addTokenHeader(request, res.accessToken));
-      }),
-      catchError((err) => {
-        isRefreshing = false;
-        authService.logout();
-        return throwError(() => err);
-      })
-    );
-  } else {
-    // Ждём, пока токен обновится
+  if (isRefreshEndpoint) {
+    isRefreshing = false;
+    refreshTokenSubject.next(null);
+    authService.logout();
+    router.navigate(['/login']);
+    return throwError(() => new Error('Refresh token expired'));
+  }
+
+  // Если уже идет процесс обновления токена
+  if (isRefreshing) {
     return refreshTokenSubject.pipe(
       filter((token): token is string => token !== null),
       take(1),
-      switchMap((token) => next(addTokenHeader(request, token)))
+      switchMap((token) => {
+        const retryReq = request.clone({
+          setHeaders: { Authorization: `Bearer ${token}` },
+        });
+        return next(retryReq);
+      })
     );
   }
+
+  // Начинаем процесс обновления токена
+  isRefreshing = true;
+  refreshTokenSubject.next(null);
+
+  return authService.refreshToken().pipe(
+    switchMap((res) => {
+      const newToken = res.accessToken;
+      authService.setAccessToken(newToken);
+      refreshTokenSubject.next(newToken);
+
+      const retryReq = request.clone({
+        setHeaders: { Authorization: `Bearer ${newToken}` },
+      });
+      return next(retryReq);
+    }),
+    catchError((err) => {
+      authService.logout();
+      router.navigate(['/login']);
+      return throwError(() => err);
+    }),
+    finalize(() => {
+      isRefreshing = false;
+      setTimeout(() => {
+        refreshTokenSubject.next(null);
+      }, 100);
+    })
+  );
 }
