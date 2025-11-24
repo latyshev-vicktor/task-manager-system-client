@@ -67,7 +67,6 @@ function prepareRequest(
 
   // Добавляем токен если есть
   let accessToken = authService.getAccessToken();
-  accessToken = null;
   if (accessToken) {
     authReq = authReq.clone({
       setHeaders: { Authorization: `Bearer ${accessToken}` },

@@ -11,11 +11,9 @@
     </button>
   </div>
 
-  <div class="targets-grid">
-    @for (t of targets; track t.id) {
-      <div tuiCardMedium (click)="openEdit(t)" class="target-card">
-        <h3>{{ t.name }}</h3>
-      </div>
+  <div class="target-list">
+     @for (t of targets; track t.id) {
+      <app-target-item [target]="t"></app-target-item>
     }
   </div>
 </div>

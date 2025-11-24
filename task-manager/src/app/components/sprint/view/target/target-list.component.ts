@@ -8,11 +8,17 @@ import { TargetModel } from '../../../../models/target/target.model';
 import { TargetEditDialogComponent } from '../target-edit/target-edit-dialog.component';
 import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { take } from 'rxjs';
+import { TargetItemComponent } from './target-item/target-item.component';
 
 @Component({
   standalone: true,
   selector: 'app-targets-list',
-  imports: [CommonModule, TuiCardMedium, TuiButton],
+  imports: [
+    CommonModule, 
+    TuiCardMedium, 
+    TuiButton,
+    TargetItemComponent
+],
   templateUrl: './target-list.component.html',
   styleUrl: './target-list.component.scss'
 })

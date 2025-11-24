@@ -1,0 +1,25 @@
+@if(target(); as target) {
+  <div class="goal-card">
+    <div class="header">
+      <tui-progress-circle [max]="target.tasks.length" [value]="getCompletedCount(target)" size="l"/>
+
+      <div class="info">
+        <div class="goal-title">{{ target.name }}</div>
+        <div class="goal-progress">
+          {{ getCompletedCount(target) }} / {{ target.tasks.length }}
+        </div>
+      </div>
+      <button tuiButton appearance="secondary" (click)="addTask()">+ задача</button>
+    </div>
+
+
+    <tui-accordion>
+      <tui-accordion-item heading="Задачи">
+        <div class="task-list">
+          <!-- @for (task of target.tasks; track task.id) {
+          } -->
+        </div>
+      </tui-accordion-item>
+    </tui-accordion>
+  </div>
+}
