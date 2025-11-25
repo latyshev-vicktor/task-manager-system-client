@@ -14,12 +14,21 @@
 
 
     <tui-accordion>
+      <button tuiAccordion>Список задач</button>
+      @for(task of target.tasks; track task.id) {
+        <!-- <tui-expand>
+          <p>{{task.name}} - {{task.description}}</p>
+        </tui-expand> -->
+      }
+    </tui-accordion>
+    <!-- <tui-accordion>
       <tui-accordion-item heading="Задачи">
         <div class="task-list">
-          <!-- @for (task of target.tasks; track task.id) {
-          } -->
+          @for (task of target.tasks; track task.id) {
+            <p>{{task.name}} - {{task.description}}</p>
+          }
         </div>
       </tui-accordion-item>
-    </tui-accordion>
+    </tui-accordion> -->
   </div>
 }

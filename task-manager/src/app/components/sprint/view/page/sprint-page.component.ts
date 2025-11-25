@@ -41,7 +41,7 @@ export class SprintPageComponent {
     const s = this.sprint()?.sprintStatus.name;
     switch (s) {
       case 'Created': return 'success';
-      case 'InProgress': return 'neutral';
+      case 'InProgress': return 'warning';
       case 'Completed': return 'info';
       default: return 'warning';
     }
