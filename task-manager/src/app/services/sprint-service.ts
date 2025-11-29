@@ -30,4 +30,8 @@ export class SprintService {
   getWeeksBySprintId(sprintId: number) : Observable<SprintWeekModel[]> {
     return this.http.get<SprintWeekModel[] | []>(`${this._baseUrl}/${sprintId}/weeks`)
   }
+
+  update(id: number, model: Partial<CreateSprintModel>): Observable<number> {
+    return this.http.put<number>(`${this._baseUrl}/${id}`, model);
+  }
 }
