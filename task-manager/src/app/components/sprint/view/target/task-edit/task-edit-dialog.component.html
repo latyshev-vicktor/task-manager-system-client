@@ -1,0 +1,30 @@
+<form
+  tuiAppearance="floating"
+  tuiForm="l"
+  [formGroup]="form">
+  <tui-textfield [tuiTextfieldCleaner]="true">
+    <label tuiLabel>Название задачи</label>
+    <input formControlName="name" placeholder="Введите название задачи" tuiTextfield />
+  </tui-textfield>
+  <tui-error formControlName="name" [error]="[] | tuiFieldError | async"/>
+  
+  <tui-textfield>
+    <label tuiLabel>Описание</label>
+    <textarea
+      formControlName="description"
+      placeholder="Введите описание задачи"
+      tuiTextarea
+      [max]="10"
+      [min]="2"
+    ></textarea>
+  </tui-textfield>
+  <tui-error formControlName="description" [error]="[] | tuiFieldError | async"/>
+  
+  <footer>
+    <div class="actions">
+      <button tuiButton size="s" appearance="flat" (click)="close()">Отмена</button>
+      <button tuiButton size="s" appearance="primary" (click)="submit()" [disabled]="form.invalid">Сохранить</button>
+    </div>
+  </footer>
+</form>
+

@@ -1,34 +1,93 @@
 @if(target(); as target) {
-  <div class="goal-card">
-    <div class="header">
-      <tui-progress-circle [max]="target.tasks.length" [value]="getCompletedCount(target)" size="l"/>
-
-      <div class="info">
-        <div class="goal-title">{{ target.name }}</div>
-        <div class="goal-progress">
-          {{ getCompletedCount(target) }} / {{ target.tasks.length }}
+  <div class="target-card">
+    <div class="target-header">
+      <div class="target-info">
+        <tui-progress-circle 
+          [max]="totalTasks || 1" 
+          [value]="getCompletedCount(target)" 
+          size="l"
+          class="progress-circle"/>
+        
+        <div class="target-details">
+          <div class="target-title-row">
+            <h3 class="target-title" (click)="openEditTarget()">{{ target.name }}</h3>
+            <button 
+              tuiButton 
+              size="xs" 
+              appearance="flat"
+              (click)="openEditTarget()"
+              [iconStart]="'@tui.pen'"
+              class="edit-btn">
+            </button>
+          </div>
+          <div class="target-progress">
+            {{ getCompletedCount(target) }} / {{ totalTasks }} задач выполнено
+          </div>
         </div>
       </div>
-      <!-- <button tuiButton appearance="secondary" (click)="addTask()">+ задача</button> -->
+      
+      <button 
+        tuiButton 
+        appearance="primary" 
+        size="s"
+        (click)="openCreateTask()"
+        [iconStart]="'@tui.plus'">
+        Добавить задачу
+      </button>
     </div>
 
-
-    <tui-accordion>
-      <button tuiAccordion>Список задач</button>
-      @for(task of target.tasks; track task.id) {
-        <!-- <tui-expand>
-          <p>{{task.name}} - {{task.description}}</p>
-        </tui-expand> -->
-      }
-    </tui-accordion>
-    <!-- <tui-accordion>
-      <tui-accordion-item heading="Задачи">
-        <div class="task-list">
-          @for (task of target.tasks; track task.id) {
-            <p>{{task.name}} - {{task.description}}</p>
+    @if (target.tasks && target.tasks.length > 0) {
+      <tui-accordion class="tasks-accordion">
+        <button tuiAccordion class="accordion-button">
+          <span>Задачи ({{ totalTasks }})</span>
+        </button>
+        
+        <div class="tasks-list">
+          @for(task of target.tasks; track task.id) {
+            <div class="task-item" [class.completed]="isTaskCompleted(task)">
+              <div class="task-content">
+                <input 
+                  type="checkbox" 
+                  [checked]="isTaskCompleted(task)"
+                  (change)="toggleTaskStatus(task)"
+                  class="task-checkbox"
+                  [id]="'task-' + task.id"/>
+                <label 
+                  [for]="'task-' + task.id" 
+                  class="task-label"
+                  [class.strikethrough]="isTaskCompleted(task)">
+                  <span class="task-name">{{ task.name }}</span>
+                  @if (task.description) {
+                    <span class="task-description">{{ task.description }}</span>
+                  }
+                </label>
+              </div>
+              <div class="task-actions">
+                <button 
+                  tuiButton 
+                  size="xs" 
+                  appearance="flat"
+                  (click)="openEditTask(task)"
+                  [iconStart]="'@tui.pen'"
+                  class="task-edit-btn">
+                </button>
+                <button 
+                  tuiButton 
+                  size="xs" 
+                  appearance="flat"
+                  (click)="deleteTask(task)"
+                  [iconStart]="'@tui.trash'"
+                  class="task-delete-btn">
+                </button>
+              </div>
+            </div>
           }
         </div>
-      </tui-accordion-item>
-    </tui-accordion> -->
+      </tui-accordion>
+    } @else {
+      <div class="empty-tasks">
+        <p>Нет задач. Добавьте первую задачу для этой цели.</p>
+      </div>
+    }
   </div>
 }

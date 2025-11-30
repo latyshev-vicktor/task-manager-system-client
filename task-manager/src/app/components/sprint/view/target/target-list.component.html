@@ -1,10 +1,10 @@
 <div class="content">
   <div class="targets-title">
-    <h1>Цели</h1>
+    <h2>Цели</h2>
     <button 
       tuiButton 
       size="s" 
-      appearance="secondary" 
+      appearance="primary" 
       (click)="openCreate()"
       [iconStart]="'@tui.plus'">
       Добавить цель
@@ -13,7 +13,10 @@
 
   <div class="target-list">
      @for (t of targets; track t.id) {
-      <app-target-item [target]="t"></app-target-item>
+      <app-target-item 
+        [target]="t"
+        (updateTarget)="loadTargets()">
+      </app-target-item>
     }
   </div>
 </div>

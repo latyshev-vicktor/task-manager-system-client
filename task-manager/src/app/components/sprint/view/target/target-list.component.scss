@@ -2,58 +2,24 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #e9ecef;
 
   h2 {
     margin: 0;
-    font-size: 1.4rem;
-    font-weight: 600;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #212529;
   }
 }
-
-// .targets-grid {
-//   display: grid;
-//   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-//   gap: 1.25rem;
-// }
 
 .target-list {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 1.25rem;
 }
 
 .content {
-  padding: 1rem;
-  border-radius: 1rem;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.06);
-}
-
-.target-card {
-  padding: 1.25rem;
-  border-radius: 1rem;
-  cursor: pointer;
-  transition: box-shadow 0.2s ease, transform 0.15s ease;
-  background: rgb(238, 181, 181);
-
-  h3 {
-    margin: 0 0 0.5rem 0;
-    font-size: 1.1rem;
-    font-weight: 600;
-  }
-
-  p {
-    margin: 0;
-    color: #6b6b6b;
-    font-size: 0.92rem;
-  }
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-  }
-
-  &:active {
-    transform: scale(0.98);
-  }
+  // Стили уже применяются из родительского компонента
 }
