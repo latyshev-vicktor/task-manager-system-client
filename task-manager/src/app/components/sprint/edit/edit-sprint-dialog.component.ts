@@ -4,7 +4,7 @@ import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModu
 import { TuiAlertService, TuiButton, TuiDialogContext, TuiError, TuiSelectLike, TuiTextfield } from "@taiga-ui/core";
 import { FieldActivityService } from "../../../services/field-activity-service";
 import { SprintService } from "../../../services/sprint-service";
-import { FieldActivityModel } from "../../../models/field-activity/field-activity.model";
+import { FieldActivityForSprintModel, FieldActivityModel } from "../../../models/field-activity/field-activity.model";
 import { TuiChevron, TuiDataListWrapper, TuiFieldErrorPipe, TuiInputChip, TuiMultiSelect, TuiTextarea, TuiTextareaLimit, tuiValidationErrorsProvider } from "@taiga-ui/kit";
 import { SprintModel } from "../../../models/sprint/sprint.model";
 import { POLYMORPHEUS_CONTEXT } from "@taiga-ui/polymorpheus";
@@ -65,35 +65,38 @@ export class EditSprintDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadFieldActivities();
-    this.loadSprintData();
   }
 
   loadFieldActivities() {
     this.fieldActivityService.getMy().subscribe(models => {
       this.fieldActivities = models;
+      this.loadSprintData();
     });
   }
 
   loadSprintData() {
     const sprint = this.context.data;
-    if (sprint && sprint.fieldActivities) {
-      // Преобразуем FieldActivityForSprintModel в FieldActivityModel для формы
-      const fieldActivities = sprint.fieldActivities.map(fa => ({
-        id: fa.id,
-        name: fa.name,
-        createdDate: fa.createdDate
-      }));
+    if (sprint) {
+      // Находим сферы деятельности из загруженного списка, которые привязаны к спринту
+      const selectedFieldActivities: FieldActivityModel[] = [];
+      if (sprint.fieldActivities && sprint.fieldActivities.length > 0) {
+        sprint.fieldActivities.forEach(sprintFa => {
+          const found = this.fieldActivities.find(fa => fa.id === sprintFa.id);
+          if (found) {
+            selectedFieldActivities.push(found);
+          }
+        });
+      }
       
-      debugger;
       this.form.patchValue({
         name: sprint.name,
         description: sprint.description,
-        fieldActivityIds: fieldActivities
+        fieldActivityIds: selectedFieldActivities
       });
     }
   }
 
-  async update() {
+  update() {
     if(!this.form.valid) {
       return;
     }
@@ -101,31 +104,32 @@ export class EditSprintDialogComponent implements OnInit {
     const sprint = this.context.data;
     const model = this.form.getRawValue();
     const transformedModel = {
+      id: sprint.id,
+      createdDate: sprint.createdDate,
       name: model.name,
       description: model.description,
-      fieldActivityIds: model.fieldActivityIds.map((x: FieldActivityModel) => x.id),
-    };
+      sprintStatus: this.context.data.sprintStatus,
+      fieldActivities: model.fieldActivityIds.map(x => {
+        let fieldActivity = x as FieldActivityForSprintModel;
+        fieldActivity.sprintId = this.context.data.id
+        return fieldActivity;
+      }),
+    } as SprintModel;
 
-    try {
-      const result = await firstValueFrom(
-        this.sprintService.update(sprint.id, transformedModel)
-      );
-
-      await firstValueFrom(
-        this.alerts.open('Спринт обновлен!', {
+    this.sprintService.update(transformedModel).subscribe(() => {
+      this.alerts.open('Спринт обновлен!', {
           label: 'Успешно',
           appearance: 'positive',
-        })
-      );
+        });
 
-      this.context.completeWith(result);
-    } catch (error: any) {
+      this.context.completeWith(null);
+    }, error => {
       const errorMessage = error?.error?.message ?? 'Неизвестная ошибка';
       this.alerts.open(errorMessage, {
         label: 'Ошибка',
         appearance: 'negative',
       }).subscribe();
-    }
+    });
   }
 
   close() {
