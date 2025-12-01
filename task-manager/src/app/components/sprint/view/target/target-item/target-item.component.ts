@@ -1,13 +1,13 @@
 import { CommonModule } from "@angular/common";
 import { Component, EventEmitter, input, Input, OnInit, Output, output, inject } from "@angular/core";
 import { TuiButton, TuiDialogService, TuiAlertService } from "@taiga-ui/core";
-import { TuiAccordion, TuiProgress } from "@taiga-ui/kit";
+import { TUI_CONFIRM, TuiAccordion, TuiProgress } from "@taiga-ui/kit";
 import { TargetModel } from "../../../../../models/target/target.model";
 import { TaskModel } from "../../../../../models/task/task.model";
 import { TaskService } from "../../../../../services/task-service";
 import { TaskEditDialogComponent } from "../task-edit/task-edit-dialog.component";
 import { PolymorpheusComponent } from "@taiga-ui/polymorpheus";
-import { take } from "rxjs";
+import { Observable, take } from "rxjs";
 import { TargetEditDialogComponent } from "../../target-edit/target-edit-dialog.component";
 
 @Component({
@@ -48,27 +48,20 @@ export class TargetItemComponent implements OnInit {
   }
 
   toggleTaskStatus(task: TaskModel) {
-    const newStatus = task.status.name === 'Completed' ? 'Created' : 'Completed';
-    const updatedTask: TaskModel = {
-      ...task,
-      status: {
-        name: newStatus,
-        description: newStatus === 'Completed' ? 'Завершена' : 'В работе'
-      }
-    };
-    
-    this.taskService.complete(task.id).subscribe({
-      next: () => {
-        //task.status.name = newStatus;
-        //task.status.description = newStatus === 'Completed' ? 'Завершена' : 'В работе';
-        this.updateTarget.emit();
-      },
-      error: (error) => {
-        this.alerts.open(error?.error?.message ?? 'Ошибка при обновлении задачи', {
+    let observable: Observable<void>;
+    if(task.status.name === 'Completed') {
+      observable = this.taskService.setCreatedStatus(task.id);
+    } else {
+      observable = this.taskService.complete(task.id);
+    }
+
+    observable.subscribe(() => {
+      this.updateTarget.emit();
+    }, error => {
+      this.alerts.open(error?.error?.message, {
           label: 'Ошибка',
           appearance: 'negative',
         }).subscribe();
-      }
     });
   }
 
@@ -104,23 +97,35 @@ export class TargetItemComponent implements OnInit {
   }
 
   deleteTask(task: TaskModel) {
-    if (confirm(`Вы уверены, что хотите удалить задачу "${task.name}"?`)) {
-      this.taskService.delete(task.id).subscribe({
-        next: () => {
-          this.alerts.open('Задача удалена!', {
-            label: 'Успешно',
-            appearance: 'positive',
-          }).subscribe();
-          this.updateTarget.emit();
-        },
-        error: (error) => {
-          this.alerts.open(error?.error?.message ?? 'Ошибка при удалении задачи', {
-            label: 'Ошибка',
-            appearance: 'negative',
-          }).subscribe();
-        }
-      });
-    }
+    const message = `<div>Вы уверены что хотите удалить задачу?</div>`;
+        this.dialogs.open<boolean>(
+          TUI_CONFIRM, {
+            label: 'Подтверждение',
+            data: {
+              content: message,
+              no: 'Нет',
+              yes: 'Да'
+            }
+          }
+        ).subscribe((response) => {
+          if(!response) return;
+
+          this.taskService.delete(task.id).subscribe({
+            next: () => {
+              this.alerts.open('Задача удалена!', {
+                label: 'Успешно',
+                appearance: 'positive',
+              }).subscribe();
+              this.updateTarget.emit();
+            },
+            error: (error) => {
+              this.alerts.open(error?.error?.message ?? 'Ошибка при удалении задачи', {
+                label: 'Ошибка',
+                appearance: 'negative',
+              }).subscribe();
+            }
+          });
+        });
   }
 
   openEditTarget() {

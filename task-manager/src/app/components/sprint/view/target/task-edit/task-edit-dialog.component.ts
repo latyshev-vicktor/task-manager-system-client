@@ -7,7 +7,7 @@ import { CreateTaskModel, TaskModel } from '../../../../../models/task/task.mode
 import { POLYMORPHEUS_CONTEXT } from '@taiga-ui/polymorpheus';
 import { TaskService } from '../../../../../services/task-service';
 import { CommonModule } from '@angular/common';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-task-edit-dialog',
@@ -50,43 +50,44 @@ export class TaskEditDialogComponent implements OnInit {
     }
   }
 
-  async submit() {
+  submit() {
     if (!this.form.valid)
       return;
 
     const { name, description } = this.form.getRawValue();
     const { targetId, task } = this.context.data;
 
-    try {
-      const result = await firstValueFrom(
-        this.isNew
-          ? this.taskService.create({ name, description, targetId })
-          : this.taskService.update({
-              id: task!.id,
-              name,
-              description,
-              targetId,
-              status: task!.status,
-              createdDate: task!.createdDate
-            })
-      );
+    let observable: Observable<number>;
+    let successMessage = this.isNew ? 'Задача создана!' : 'Задача обновлена!'
+    if(this.isNew) {
+      observable = this.taskService.create({name, description, targetId});
+    } else {
+      observable = this.taskService.update({
+        id: task!.id,
+        name,
+        description,
+        targetId,
+        status: task!.status,
+        createdDate: task!.createdDate
+      });
+    }
 
-      await firstValueFrom(
-        this.alerts.open(
-          this.isNew ? 'Задача создана!' : 'Задача обновлена!',
-          { label: 'Успешно', appearance: 'positive' }
-        )
-      );
+    observable.subscribe((id) => {
+      this.alerts.open(
+          successMessage,
+          { 
+            label: 'Успешно', appearance: 'positive' 
+          }
+        ).subscribe();
 
-      this.context.completeWith(result);
-    } catch (error: any) {
+      this.context.completeWith(id);
+    }, error => {
       const msg = error?.error?.message ?? 'Неизвестная ошибка';
-
       this.alerts.open(msg, {
         label: 'Ошибка',
         appearance: 'negative',
       }).subscribe();
-    }
+    })
   }
 
   close() {

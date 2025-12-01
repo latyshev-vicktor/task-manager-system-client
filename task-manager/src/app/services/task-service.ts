@@ -20,6 +20,10 @@ export class TaskService {
     return this.http.patch<void>(`${this._baseUrl}/${id}/complete`, {})
   }
 
+  setCreatedStatus(id: number) : Observable<void> {
+    return this.http.patch<void>(`${this._baseUrl}/${id}/set-created`, {});
+  }
+
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this._baseUrl}/${id}`);
   }

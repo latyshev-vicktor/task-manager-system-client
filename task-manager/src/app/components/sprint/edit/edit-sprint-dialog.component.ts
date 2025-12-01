@@ -8,7 +8,6 @@ import { FieldActivityForSprintModel, FieldActivityModel } from "../../../models
 import { TuiChevron, TuiDataListWrapper, TuiFieldErrorPipe, TuiInputChip, TuiMultiSelect, TuiTextarea, TuiTextareaLimit, tuiValidationErrorsProvider } from "@taiga-ui/kit";
 import { SprintModel } from "../../../models/sprint/sprint.model";
 import { POLYMORPHEUS_CONTEXT } from "@taiga-ui/polymorpheus";
-import { firstValueFrom } from "rxjs";
 
 const MAX_LENGTH_DESCRIPTION = 200;
 
@@ -121,7 +120,8 @@ export class EditSprintDialogComponent implements OnInit {
           label: 'Успешно',
           appearance: 'positive',
         });
-
+      
+      debugger;
       this.context.completeWith(null);
     }, error => {
       const errorMessage = error?.error?.message ?? 'Неизвестная ошибка';
