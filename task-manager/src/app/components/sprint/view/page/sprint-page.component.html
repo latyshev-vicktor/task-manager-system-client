@@ -1,18 +1,29 @@
 @if (sprint(); as sprint) {
   <div class="page">
-    <!-- Sprint Header Card -->
+    <!-- Compact Sprint Header -->
     <div tuiCardLarge class="sprint-header-card">
       <header tuiHeader class="sprint-header">
         <div class="header-content">
           <div class="title-section">
             <h1 tuiTitle class="sprint-title">{{ sprint.name }}</h1>
-            <div class="status-badge">
+            <div class="header-meta">
               <tui-badge
                 tuiStatus
                 [appearance]="statusColor"
-                size="l">
+                size="m">
                 {{ sprint.sprintStatus.description }}
               </tui-badge>
+              <span class="date-range">
+                {{ sprint.startDate | date : 'dd.MM.yyyy' }} — {{ sprint.endDate | date : 'dd.MM.yyyy' }}
+              </span>
+              <span class="progress-info">
+                {{ progressPercentage | number:'1.0-0' }}% пройдено
+              </span>
+              @if (daysRemaining > 0) {
+                <span class="days-remaining" [class.warning]="daysRemaining < 7">
+                  {{ daysRemaining }} {{ daysRemaining === 1 ? 'день' : daysRemaining < 5 ? 'дня' : 'дней' }}
+                </span>
+              }
             </div>
           </div>
           
@@ -20,7 +31,7 @@
             <button
               tuiButton
               appearance="primary"
-              size="m"
+              size="s"
               (click)="openEdit()"
               [iconStart]="'@tui.pen'">
               Редактировать
@@ -29,65 +40,81 @@
         </div>
       </header>
 
-      <!-- Sprint Info -->
-      <div class="sprint-info">
-        <div class="info-grid">
-          <div class="info-item">
-            <div class="info-label">Дата начала</div>
-            <div class="info-value">{{ sprint.startDate | date : 'dd.MM.yyyy' }}</div>
-          </div>
-          <div class="info-item">
-            <div class="info-label">Дата окончания</div>
-            <div class="info-value">{{ sprint.endDate | date : 'dd.MM.yyyy' }}</div>
-          </div>
-          <div class="info-item">
-            <div class="info-label">Осталось дней</div>
-            <div class="info-value" [class.warning]="daysRemaining < 7">
-              {{ daysRemaining > 0 ? daysRemaining : 'Завершен' }}
+      <!-- Collapsible Sprint Details -->
+      <tui-accordion class="sprint-details-accordion">
+        <button tuiAccordion class="accordion-trigger">
+          <span>Детали спринта</span>
+        </button>
+        
+        <div class="sprint-details-content">
+          <div class="info-grid">
+            <div class="info-item">
+              <div class="info-label">Дата начала</div>
+              <div class="info-value">{{ sprint.startDate | date : 'dd.MM.yyyy' }}</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Дата окончания</div>
+              <div class="info-value">{{ sprint.endDate | date : 'dd.MM.yyyy' }}</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Осталось дней</div>
+              <div class="info-value" [class.warning]="daysRemaining < 7">
+                {{ daysRemaining > 0 ? daysRemaining : 'Завершен' }}
+              </div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Пройдено</div>
+              <div class="info-value">{{ progressPercentage | number:'1.0-0' }}%</div>
             </div>
           </div>
-          <div class="info-item">
-            <div class="info-label">Пройдено</div>
-            <div class="info-value">{{ progressPercentage | number:'1.0-0' }}%</div>
-          </div>
+
+          @if (sprint.description) {
+            <div class="description-section">
+              <h3 class="section-title">Описание</h3>
+              <p class="description">{{ sprint.description }}</p>
+            </div>
+          }
+
+          @if (sprint.fieldActivities && sprint.fieldActivities.length > 0) {
+            <div class="field-activities-section">
+              <h3 class="section-title">Сферы деятельности</h3>
+              <div class="activities-tags">
+                @for (activity of sprint.fieldActivities; track activity.id) {
+                  <tui-badge
+                    appearance="warning"
+                    size="m">
+                    {{ activity.name }}
+                  </tui-badge>
+                }
+              </div>
+            </div>
+          }
         </div>
+      </tui-accordion>
+    </div>
 
-        @if (sprint.description) {
-          <div class="description-section">
-            <h3 class="section-title">Описание</h3>
-            <p class="description">{{ sprint.description }}</p>
+    <!-- Tabs for Targets and Weeks -->
+    <div tuiCardLarge class="content-tabs-card">
+      <tui-tabs
+        [(activeItemIndex)]="activeTabIndex"
+        class="content-tabs">
+        <button tuiTab>Цели</button>
+        <button tuiTab>Недели спринта</button>
+      </tui-tabs>
+
+      <div class="tab-content">
+        @if (activeTabIndex === 0) {
+          <div class="tab-panel">
+            <app-targets-list [sprintId]="sprint.id" />
           </div>
         }
-
-        @if (sprint.fieldActivities && sprint.fieldActivities.length > 0) {
-          <div class="field-activities-section">
-            <h3 class="section-title">Сферы деятельности</h3>
-            <div class="activities-tags">
-              @for (activity of sprint.fieldActivities; track activity.id) {
-                <tui-badge
-                  appearance="warning"
-                  size="l">
-                  {{ activity.name }}
-                </tui-badge>
-              }
-            </div>
+        
+        @if (activeTabIndex === 1) {
+          <div class="tab-panel">
+            <app-weeks-list [sprintId]="sprint.id" />
           </div>
         }
       </div>
-    </div>
-
-    <!-- Targets Section -->
-    <div class="section-block">
-      <app-targets-list [sprintId]="sprint.id" />
-    </div>
-
-    <!-- Weeks Section -->
-    <div class="section-block">
-      <div class="section-header">
-        <h2 class="section-title-large">Недели спринта</h2>
-        <p class="section-subtitle">Распределите задачи по неделям</p>
-      </div>
-      <app-weeks-list [sprintId]="sprint.id" />
     </div>
   </div>
 }

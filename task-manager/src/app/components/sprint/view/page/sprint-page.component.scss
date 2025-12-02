@@ -1,8 +1,8 @@
 .page {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  padding: 2rem;
+  gap: 1.5rem;
+  padding: 1.5rem;
   max-width: 2000px;
   margin: 0 auto;
   min-height: 100vh;
@@ -22,13 +22,13 @@
 }
 
 .sprint-header {
-  padding: 1.5rem 2rem;
+  padding: 1.25rem 1.5rem;
   border-bottom: 1px solid #e8e8e8;
 
   .header-content {
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: center;
     gap: 1.5rem;
   }
 
@@ -36,48 +36,86 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.75rem;
   }
 
   .sprint-title {
     margin: 0;
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 700;
     line-height: 1.2;
   }
 
-  .status-badge {
-    display: inline-flex;
+  .header-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .date-range,
+  .progress-info,
+  .days-remaining {
+    font-size: 0.875rem;
+    color: #6c757d;
+    font-weight: 500;
+  }
+
+  .days-remaining {
+    &.warning {
+      color: #dc3545;
+      font-weight: 600;
+    }
   }
 }
 
-.sprint-info {
-  padding: 2rem;
+.sprint-details-accordion {
+  border-top: 1px solid #e8e8e8;
+}
+
+.accordion-trigger {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  text-align: left;
+  font-weight: 500;
+  color: #495057;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: #f8f9fa;
+  }
+}
+
+.sprint-details-content {
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 .info-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
 }
 
 .info-item {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  padding: 1rem;
+  padding: 0.875rem;
   background: #f8f9fa;
-  border-radius: 12px;
+  border-radius: 8px;
   border: 1px solid #e9ecef;
   transition: all 0.2s ease;
 
   &:hover {
     background: #e9ecef;
-    transform: translateY(-2px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   }
 }
 
@@ -103,11 +141,11 @@
 .field-activities-section {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.75rem;
 }
 
 .section-title {
-  font-size: 1.125rem;
+  font-size: 1rem;
   font-weight: 600;
   color: #495057;
   margin: 0;
@@ -116,11 +154,11 @@
 }
 
 .description {
-  font-size: 1rem;
+  font-size: 0.95rem;
   line-height: 1.6;
   color: #495057;
   margin: 0;
-  padding: 1rem;
+  padding: 0.875rem;
   background: #f8f9fa;
   border-radius: 8px;
   border-left: 4px solid #667eea;
@@ -129,18 +167,18 @@
 .activities-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
-  padding: 1rem;
+  gap: 0.5rem;
+  padding: 0.875rem;
   background: #f8f9fa;
   border-radius: 8px;
 }
 
-// Section Blocks
-.section-block {
+// Content Tabs Card
+.content-tabs-card {
   background: white;
   border-radius: 16px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  padding: 2rem;
+  overflow: hidden;
   transition: box-shadow 0.3s ease;
 
   &:hover {
@@ -148,23 +186,27 @@
   }
 }
 
-.section-header {
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 2px solid #e9ecef;
+.content-tabs {
+  border-bottom: 1px solid #e8e8e8;
 }
 
-.section-title-large {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #212529;
-  margin: 0 0 0.5rem 0;
+.tab-content {
+  padding: 1.25rem;
+  min-height: 300px;
 }
 
-.section-subtitle {
-  font-size: 0.95rem;
-  color: #6c757d;
-  margin: 0;
+.tab-panel {
+  width: 100%;
+  
+  // Убираем лишние отступы у вложенных компонентов
+  ::ng-deep {
+    .content,
+    .section-block {
+      padding: 0;
+      box-shadow: none;
+      background: transparent;
+    }
+  }
 }
 
 // Responsive

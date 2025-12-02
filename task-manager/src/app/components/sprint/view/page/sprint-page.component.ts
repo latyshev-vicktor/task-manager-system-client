@@ -2,7 +2,7 @@ import { CommonModule, DatePipe } from "@angular/common";
 import { Component, inject, OnInit, signal } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { TuiButton, TuiDialogService, TuiTitle } from "@taiga-ui/core";
-import { TuiBadge, TuiStatus } from "@taiga-ui/kit";
+import { TuiBadge, TuiStatus, TuiTabs, TuiTab, TuiAccordion } from "@taiga-ui/kit";
 import { TuiCardLarge, TuiHeader } from "@taiga-ui/layout";
 import { SprintService } from "../../../../services/sprint-service";
 import { SprintModel } from "../../../../models/sprint/sprint.model";
@@ -23,6 +23,9 @@ import { take } from "rxjs";
     TuiCardLarge,
     TuiHeader,
     TuiTitle,
+    TuiTabs,
+    TuiTab,
+    TuiAccordion,
     WeeksListComponent,
     TargetsListComponent,
   ],
@@ -37,6 +40,7 @@ export class SprintPageComponent {
   private readonly dialogContent = new PolymorpheusComponent(EditSprintDialogComponent);
 
   sprint = signal<SprintModel | null>(null);
+  activeTabIndex = 0;
 
   constructor() {
     const id = this.route.snapshot.params['id'];
