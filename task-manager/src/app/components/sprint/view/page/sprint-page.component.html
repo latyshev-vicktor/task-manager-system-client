@@ -93,28 +93,65 @@
       </tui-accordion>
     </div>
 
-    <!-- Tabs for Targets and Weeks -->
-    <div tuiCardLarge class="content-tabs-card">
-      <tui-tabs
-        [(activeItemIndex)]="activeTabIndex"
-        class="content-tabs">
-        <button tuiTab>Цели</button>
-        <button tuiTab>Недели спринта</button>
-      </tui-tabs>
+    <!-- Distribution Mode Toggle -->
+    <div class="mode-toggle">
+      <button
+        tuiButton
+        appearance="outline"
+        size="s"
+        (click)="toggleDistributionMode()"
+        [iconStart]="isDistributionMode ? '@tui.columns' : '@tui.arrows'">
+        {{ isDistributionMode ? 'Обычный режим' : 'Режим распределения задач' }}
+      </button>
+    </div>
 
-      <div class="tab-content">
-        @if (activeTabIndex === 0) {
-          <div class="tab-panel">
+    @if (isDistributionMode) {
+      <!-- Split View for Task Distribution -->
+      <div class="distribution-view">
+        <div tuiCardLarge class="distribution-panel targets-panel">
+          <div class="panel-header">
+            <h2 class="panel-title">Цели</h2>
+            <p class="panel-subtitle">Перетащите задачи в недели</p>
+          </div>
+          <div class="panel-content">
             <app-targets-list [sprintId]="sprint.id" />
           </div>
-        }
-        
-        @if (activeTabIndex === 1) {
-          <div class="tab-panel">
+        </div>
+
+        <div tuiCardLarge class="distribution-panel weeks-panel">
+          <div class="panel-header">
+            <h2 class="panel-title">Недели спринта</h2>
+            <p class="panel-subtitle">Перетащите задачи сюда</p>
+          </div>
+          <div class="panel-content">
             <app-weeks-list [sprintId]="sprint.id" />
           </div>
-        }
+        </div>
       </div>
-    </div>
+    } @else {
+      <!-- Tabs for Targets and Weeks -->
+      <div tuiCardLarge class="content-tabs-card">
+        <tui-tabs
+          [(activeItemIndex)]="activeTabIndex"
+          class="content-tabs">
+          <button tuiTab>Цели</button>
+          <button tuiTab>Недели спринта</button>
+        </tui-tabs>
+
+        <div class="tab-content">
+          @if (activeTabIndex === 0) {
+            <div class="tab-panel">
+              <app-targets-list [sprintId]="sprint.id" />
+            </div>
+          }
+          
+          @if (activeTabIndex === 1) {
+            <div class="tab-panel">
+              <app-weeks-list [sprintId]="sprint.id" />
+            </div>
+          }
+        </div>
+      </div>
+    }
   </div>
 }

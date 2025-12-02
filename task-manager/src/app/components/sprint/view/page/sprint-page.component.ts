@@ -41,6 +41,7 @@ export class SprintPageComponent {
 
   sprint = signal<SprintModel | null>(null);
   activeTabIndex = 0;
+  isDistributionMode = false;
 
   constructor() {
     const id = this.route.snapshot.params['id'];
@@ -99,5 +100,9 @@ export class SprintPageComponent {
     let result =  Math.min(100, Math.max(0, (elapsed / total) * 100));
     result = Math.round(result);
     return result;
+  }
+
+  toggleDistributionMode() {
+    this.isDistributionMode = !this.isDistributionMode;
   }
 }

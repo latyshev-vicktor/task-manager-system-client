@@ -9,15 +9,18 @@ import { TaskEditDialogComponent } from "../task-edit/task-edit-dialog.component
 import { PolymorpheusComponent } from "@taiga-ui/polymorpheus";
 import { Observable, take } from "rxjs";
 import { TargetEditDialogComponent } from "../../target-edit/target-edit-dialog.component";
+import { DragDropModule, CdkDrag } from "@angular/cdk/drag-drop";
 
 @Component({
 selector: 'app-target-item',
 standalone: true,
-imports: [
+  imports: [
   CommonModule, 
   TuiAccordion, 
   TuiProgress, 
-  TuiButton
+  TuiButton,
+  DragDropModule,
+  CdkDrag
 ],
 templateUrl: './target-item.component.html',
 styleUrls: ['./target-item.component.scss']

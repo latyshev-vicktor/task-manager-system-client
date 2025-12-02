@@ -44,8 +44,12 @@
         
         <div class="tasks-list">
           @for(task of target.tasks; track task.id) {
-            <div class="task-item" [class.completed]="isTaskCompleted(task)">
-              <div class="task-content">
+            <div 
+              cdkDrag
+              [cdkDragData]="task"
+              class="task-item" 
+              [class.completed]="isTaskCompleted(task)">
+              <div class="task-content" cdkDragHandle>
                 <input 
                   type="checkbox" 
                   [checked]="isTaskCompleted(task)"

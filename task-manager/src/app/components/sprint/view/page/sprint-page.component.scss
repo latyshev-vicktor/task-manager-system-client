@@ -173,6 +173,71 @@
   border-radius: 8px;
 }
 
+// Mode Toggle
+.mode-toggle {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.5rem;
+}
+
+// Distribution View (Split View)
+.distribution-view {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  min-height: 600px;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+.distribution-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 600px;
+}
+
+.panel-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #e8e8e8;
+  flex-shrink: 0;
+}
+
+.panel-title {
+  margin: 0 0 0.25rem 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #212529;
+}
+
+.panel-subtitle {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #6c757d;
+}
+
+.panel-content {
+  flex: 1;
+  padding: 1.25rem;
+  overflow-y: auto;
+
+  ::ng-deep {
+    .content,
+    .section-block {
+      padding: 0;
+      box-shadow: none;
+      background: transparent;
+    }
+
+    .targets-title {
+      display: none;
+    }
+  }
+}
+
 // Content Tabs Card
 .content-tabs-card {
   background: white;
