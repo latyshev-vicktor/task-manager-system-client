@@ -1,0 +1,67 @@
+<form 
+  tuiAppearance="floating"
+  tuiForm="l"
+  [formGroup]="form">
+  <div class="form-container">
+    <tui-textfield [tuiTextfieldCleaner]="true">
+      <label tuiLabel>Название</label>
+      <input formControlName="name" placeholder="Введите наименование спринта" tuiTextfield />
+    </tui-textfield>
+    <tui-error formControlName="name" [error]="[] | tuiFieldError | async"/>
+    <tui-textfield>
+      <label tuiLabel>Описание</label>
+      <textarea
+        formControlName="description"
+        placeholder="Введите описание спринта"
+        [style.margin-block-end.rem]="1"
+        tuiTextarea
+        [limit]="200"
+        [max]="10"
+        [min]="2"
+    ></textarea>
+    </tui-textfield>
+    <tui-error formControlName="description" [error]="[] | tuiFieldError | async"/>
+    <label tuiLabel>
+      <tui-textfield
+          multi
+          tuiChevron
+          [stringify]="stringify">
+          <label tuiLabel>Сферы деятельности</label>
+          <input
+              tuiInputChip
+              tuiSelectLike
+              formControlName="fieldActivityIds"
+              [placeholder]="form.get('fieldActivityIds')?.value?.length ? '': 'Выберите из списка'"
+          />
+          <tui-data-list-wrapper
+              *tuiTextfieldDropdown
+              new
+              tuiMultiSelectGroup
+              [items]="fieldActivities"
+          />
+      </tui-textfield>
+      <tui-error formControlName="fieldActivityIds" [error]="[] | tuiFieldError | async"/>
+    </label>
+    <label tuiLabel>
+        Количество недель
+        <tui-textfield>
+            <input
+                formControlName="weekCount"
+                tuiInputNumber
+                [step]="1"
+            />
+        </tui-textfield>
+ 
+        <tui-error
+            formControlName="weekCount"
+            [error]="[] | tuiFieldError | async"
+        />
+    </label>
+  </div>
+  <footer>
+    <div class="actions">
+      <button tuiButton size="s" appearance="flat" (click)="close()">Отмена</button>
+      <button tuiButton size="s" appearance="primary" (click)="create()" [disabled]="form.invalid">Создать</button>
+    </div>
+  </footer>
+</form>

@@ -1,0 +1,310 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  max-width: 2000px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+// Sprint Header Card
+.sprint-header-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.sprint-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #e8e8e8;
+
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .title-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .sprint-title {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .header-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .date-range,
+  .progress-info,
+  .days-remaining {
+    font-size: 0.875rem;
+    color: #6c757d;
+    font-weight: 500;
+  }
+
+  .days-remaining {
+    &.warning {
+      color: #dc3545;
+      font-weight: 600;
+    }
+  }
+}
+
+.sprint-details-accordion {
+  border-top: 1px solid #e8e8e8;
+}
+
+.accordion-trigger {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  text-align: left;
+  font-weight: 500;
+  color: #495057;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: #f8f9fa;
+  }
+}
+
+.sprint-details-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.875rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: #e9ecef;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  }
+}
+
+.info-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #6c757d;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.info-value {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #212529;
+
+  &.warning {
+    color: #dc3545;
+  }
+}
+
+.description-section,
+.field-activities-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #495057;
+  margin: 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.description {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #495057;
+  margin: 0;
+  padding: 0.875rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+}
+
+.activities-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.875rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+// Mode Toggle
+.mode-toggle {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.5rem;
+}
+
+// Distribution View (Split View)
+.distribution-view {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  min-height: 600px;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+.distribution-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 600px;
+}
+
+.panel-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #e8e8e8;
+  flex-shrink: 0;
+}
+
+.panel-title {
+  margin: 0 0 0.25rem 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #212529;
+}
+
+.panel-subtitle {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #6c757d;
+}
+
+.panel-content {
+  flex: 1;
+  padding: 1.25rem;
+  overflow-y: auto;
+
+  ::ng-deep {
+    .content,
+    .section-block {
+      padding: 0;
+      box-shadow: none;
+      background: transparent;
+    }
+
+    .targets-title {
+      display: none;
+    }
+  }
+}
+
+// Content Tabs Card
+.content-tabs-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.content-tabs {
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.tab-content {
+  padding: 1.25rem;
+  min-height: 300px;
+}
+
+.tab-panel {
+  width: 100%;
+  
+  // Убираем лишние отступы у вложенных компонентов
+  ::ng-deep {
+    .content,
+    .section-block {
+      padding: 0;
+      box-shadow: none;
+      background: transparent;
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .page {
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+
+  .sprint-header {
+    padding: 1rem 1.5rem;
+
+    .header-content {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .sprint-title {
+      font-size: 1.5rem;
+    }
+  }
+
+  .sprint-info {
+    padding: 1.5rem;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .section-block {
+    padding: 1.5rem;
+  }
+}
+

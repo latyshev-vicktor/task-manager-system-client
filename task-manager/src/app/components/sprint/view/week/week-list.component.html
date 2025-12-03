@@ -1,0 +1,58 @@
+<div class="weeks-grid">
+  @for (w of weeks; track w.id) {
+    <div 
+      tuiCardLarge 
+      tuiAppearance="positive" 
+      class="week-card"
+      cdkDropList
+      [cdkDropListData]="w.tasks"
+      (cdkDropListDropped)="onTaskDropped($event, w)"
+      (cdkDropListEntered)="onDragEntered($event, w)"
+      (cdkDropListExited)="onDragExited($event, w)"
+      [class.cdk-drop-list-receiving]="isReceiving(w.id)">
+      
+      <header tuiHeader class="week-header">
+        <h3 tuiTitle>
+          Неделя {{w.weekNumber}}
+          <span tuiSubtitle>Срок: {{ w.startDate | date : 'dd.MM.yyyy' }} — {{ w.endDate | date : 'dd.MM.yyyy' }}</span>
+        </h3>
+        <div class="week-badge">
+          <span class="task-count">{{ w.tasks?.length || 0 }} задач</span>
+        </div>
+      </header>
+
+      <div class="tasks-container">
+        @if (w.tasks && w.tasks.length > 0) {
+          <div class="tasks">
+            @for (task of w.tasks; track task.id) {
+              <div class="task-item">
+                <div class="task-checkbox-wrapper">
+                  <input 
+                    type="checkbox" 
+                    [checked]="task.status?.name === 'Completed'"
+                    [id]="'week-task-' + task.id"
+                    class="task-checkbox" />
+                </div>
+                <label 
+                  [for]="'week-task-' + task.id" 
+                  class="task-label"
+                  [class.completed]="task.status?.name === 'Completed'">
+                  <span class="task-name">{{ task.name }}</span>
+                  @if (task.description) {
+                    <span class="task-description">{{ task.description }}</span>
+                  }
+                </label>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="empty-week">
+            <div class="empty-icon">📋</div>
+            <p class="empty-text">Перетащите задачи сюда</p>
+            <p class="empty-hint">Задачи из целей можно перетаскивать в недели</p>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>

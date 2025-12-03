@@ -1,0 +1,89 @@
+.sprint-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  height: calc(100vh - 120px);
+  overflow: hidden;
+}
+
+.sprint-column {
+  display: flex;
+  flex-direction: column;
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 16px;
+  overflow-y: auto;
+
+  h3 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .column-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+}
+
+.sprint-card {
+  padding: 16px;
+  border: 1px solid var(--tui-base-04);
+  border-radius: 12px;
+  background: var(--tui-base-01);
+  background-color: rgb(227, 239, 239);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .sprint-card-description {
+    font-size: 13px;
+    color: var(--tui-text-02);
+    line-height: 1.4;
+
+    /* ограничение текста в карточке */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;  /* показываем максимум 3 строки */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  footer {
+    font-size: 12px;
+    color: var(--tui-text-03);
+    margin-top: auto;
+  }
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  }
+}
+
+/* Цветовые акценты для статусов */
+.sprint-column.created h3 {
+  color: #ff9800;
+}
+.sprint-column.active h3 {
+  color: #4caf50;
+}
+.sprint-column.done h3 {
+  color: #2196f3;
+}
+
+.create-button {
+  padding-bottom: 10px;
+  justify-self: end;
+}

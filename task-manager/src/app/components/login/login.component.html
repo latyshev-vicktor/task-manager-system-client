@@ -1,0 +1,39 @@
+<div class="login-container">
+  <form
+    tuiAppearance="floating"
+    tuiCardLarge
+    tuiForm="l"
+    [formGroup]="form"
+    class="form-container">
+    <header tuiHeader>
+      <h2 tuiTitle>
+        Вход в систему
+      </h2>
+    </header>
+    <tui-textfield [tuiTextfieldCleaner]="true">
+      <tui-icon icon="@tui.mail"/>
+        <label tuiLabel>Email</label>
+        <input formControlName="email" placeholder="Введите email" tuiTextfield />
+    </tui-textfield>
+    <tui-error formControlName="email" [error]="[] | tuiFieldError | async"/>
+    <tui-textfield [tuiTextfieldCleaner]="true">
+      <label tuiLabel>Пароль</label>
+      <input formControlName="password" placeholder="Введите пароль" type="password" tuiTextfield/>
+      <tui-icon tuiPassword/>
+    </tui-textfield>
+    <tui-error formControlName="password" [error]="[] | tuiFieldError | async"/>
+    <footer>
+      <button 
+        size="l" 
+        tuiButton 
+        type="submit"
+        appearance="primary"
+        class="submit-btn"
+        [disabled]="!form.valid"
+        (click)="submit()">Войти</button>
+    </footer>
+    <div class="links">
+      <a href="/register">Регистрация</a>
+    </div>
+  </form>
+</div>
