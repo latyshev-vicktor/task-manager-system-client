@@ -1,8 +1,8 @@
 import { CommonModule, DatePipe } from "@angular/common";
 import { Component, inject, OnInit, signal } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { TuiButton, TuiDialogService, TuiTitle } from "@taiga-ui/core";
-import { TuiBadge, TuiStatus, TuiTabs, TuiTab, TuiAccordion } from "@taiga-ui/kit";
+import { TuiButton, TuiDialogService, TuiIcon, TuiTitle } from "@taiga-ui/core";
+import { TuiBadge, TuiStatus, TuiTabs, TuiTab, TuiAccordion, TuiPush } from "@taiga-ui/kit";
 import { TuiCardLarge, TuiHeader } from "@taiga-ui/layout";
 import { SprintService } from "../../../../services/sprint-service";
 import { SprintModel } from "../../../../models/sprint/sprint.model";
@@ -11,6 +11,7 @@ import { TargetsListComponent } from "../target/target-list.component";
 import { EditSprintDialogComponent } from "../../edit/edit-sprint-dialog.component";
 import { PolymorpheusComponent } from "@taiga-ui/polymorpheus";
 import { take } from "rxjs";
+import { RealtimeService } from "../../../../services/real-time-service";
 
 @Component({
   standalone: true,
@@ -28,24 +29,38 @@ import { take } from "rxjs";
     TuiAccordion,
     WeeksListComponent,
     TargetsListComponent,
+    TuiPush,
+    TuiIcon
   ],
   templateUrl: './sprint-page.component.html',
   styleUrls: ['./sprint-page.component.scss'],
   providers: [DatePipe]
 })
-export class SprintPageComponent {
+export class SprintPageComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private service = inject(SprintService);
   private dialogs = inject(TuiDialogService);
+  private realTimeService = inject(RealtimeService);
   private readonly dialogContent = new PolymorpheusComponent(EditSprintDialogComponent);
 
   sprint = signal<SprintModel | null>(null);
   activeTabIndex = 0;
   isDistributionMode = false;
+  showPush: boolean = false;
 
   constructor() {
     const id = this.route.snapshot.params['id'];
     this.loadSprint(id);
+
+  }
+  ngOnInit(): void {
+    this.realTimeService.onSprintUpdated().subscribe(x => {
+      this.showPush = true;
+    });
+  }
+
+  toggle(show: boolean) {
+    this.showPush = show;
   }
 
   loadSprint(id: number) {
@@ -68,6 +83,13 @@ export class SprintPageComponent {
       .subscribe(() => {
         this.loadSprint(sprint.id);
       });
+  }
+
+  startSprint() {
+    this.service.startSprint(this.sprint()!.id)
+    .subscribe(() => {
+      this.loadSprint(this.sprint()!.id);
+    });
   }
 
   get statusColor(): string {

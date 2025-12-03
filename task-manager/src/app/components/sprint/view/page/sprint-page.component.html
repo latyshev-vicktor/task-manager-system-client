@@ -37,7 +37,26 @@
               Редактировать
             </button>
           }
+          @if(sprint.sprintStatus.name === 'Created') {
+            <button
+              tuiButton
+              appearance="positive"
+              size="s"
+              (click)="startSprint()">
+              Стартовать спринт
+            </button>
+          }
         </div>
+
+        <tui-push
+          *tuiPush="showPush"
+          heading="Обновлен статус спринта"
+          type="Уведомление"
+          (close)="toggle(false)"
+        >
+            <tui-icon icon="@tui.message-square" />
+            <div>Обновлен статус на <b>{{sprint.sprintStatus.description}}</b></div>
+        </tui-push>
       </header>
 
       <!-- Collapsible Sprint Details -->
