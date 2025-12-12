@@ -37,6 +37,17 @@
               Редактировать
             </button>
           }
+
+          @if (sprint.sprintStatus.name === 'Created') {
+            <button
+              tuiButton
+              appearance="positive"
+              size="s"
+              (click)="startSprint()"
+              [iconStart]="'@tui.pen'">
+              Стартовать спринт
+            </button>
+          }
         </div>
       </header>
 
