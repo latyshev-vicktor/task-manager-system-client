@@ -1,10 +1,10 @@
+import { SprintService } from './../../../../services/sprint-service';
 import { CommonModule, DatePipe } from "@angular/common";
 import { Component, inject, OnInit, signal } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { TuiButton, TuiDialogService, TuiTitle } from "@taiga-ui/core";
-import { TuiBadge, TuiStatus, TuiTabs, TuiTab, TuiAccordion } from "@taiga-ui/kit";
+import { TuiAlertService, TuiButton, TuiDialogService, TuiTitle } from "@taiga-ui/core";
+import { TuiBadge, TuiStatus, TuiTabs, TuiTab, TuiAccordion, TUI_CONFIRM } from "@taiga-ui/kit";
 import { TuiCardLarge, TuiHeader } from "@taiga-ui/layout";
-import { SprintService } from "../../../../services/sprint-service";
 import { SprintModel } from "../../../../models/sprint/sprint.model";
 import { WeeksListComponent } from "../week/week-list.component";
 import { TargetsListComponent } from "../target/target-list.component";
@@ -37,19 +37,20 @@ export class SprintPageComponent {
   private route = inject(ActivatedRoute);
   private service = inject(SprintService);
   private dialogs = inject(TuiDialogService);
+  private alerts = inject(TuiAlertService);
   private readonly dialogContent = new PolymorpheusComponent(EditSprintDialogComponent);
 
   sprint = signal<SprintModel | null>(null);
   activeTabIndex = 0;
   isDistributionMode = false;
+  sprintId: any = this.route.snapshot.params['id'];
 
   constructor() {
-    const id = this.route.snapshot.params['id'];
-    this.loadSprint(id);
+    this.loadSprint();
   }
 
-  loadSprint(id: number) {
-    this.service.getById(id).subscribe(s => {
+  loadSprint() {
+    this.service.getById(this.sprintId).subscribe(s => {
       this.sprint.set(s);
     });
   }
@@ -66,7 +67,7 @@ export class SprintPageComponent {
       })
       .pipe(take(1))
       .subscribe(() => {
-        this.loadSprint(sprint.id);
+        this.loadSprint();
       });
   }
 
@@ -104,5 +105,46 @@ export class SprintPageComponent {
 
   toggleDistributionMode() {
     this.isDistributionMode = !this.isDistributionMode;
+  }
+
+  normalize(date: Date): number {
+    return new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate()
+    ).getTime();
+  }
+
+  startSprint() {
+    const sprint = this.sprint();
+    if(sprint == null) return;
+
+    const createdDate = new Date(sprint.createdDate!);
+    const today = new Date();
+    if(this.normalize(createdDate) !== this.normalize(today)) {
+      const message = `<div>Сроки окончания спринта будут пересчитаны в зависимости от количества недель. Продолжить?</div>`;
+        this.dialogs.open<boolean>(
+          TUI_CONFIRM, {
+            label: 'Подтверждение',
+            data: {
+              content: message,
+              no: 'Нет',
+              yes: 'Да'
+            }
+          }
+        ).subscribe(response => {
+          if(!response) return;
+
+          this.service.startSprint(this.sprint()!.id).subscribe(() => {
+            this.loadSprint();
+          }, error => {
+            const msg = error?.error?.message ?? 'Неизвестная ошибка';
+            this.alerts.open(msg, {
+              label: 'Ошибка',
+              appearance: 'negative',
+            }).subscribe();
+          })
+        })
+    }
   }
 }
