@@ -36,6 +36,6 @@ export class SprintService {
   }
 
   startSprint(id: number) : Observable<void> {
-    return this.http.post<void>(`${this._baseUrl}/${id}/start-sprint`, {});
+    return this.http.patch<void>(`${this._baseUrl}/${id}/start-sprint`, {});
   }
 }
