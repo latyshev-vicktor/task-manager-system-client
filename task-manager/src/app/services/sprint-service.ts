@@ -34,4 +34,8 @@ export class SprintService {
   update(model: Partial<SprintModel>): Observable<number> {
     return this.http.put<number>(`${this._baseUrl}`, model);
   }
+
+  start(id: number) : Observable<void> {
+    return this.http.patch<void>(`${this._baseUrl}/${id}/start-sprint`, {});
+  }
 }

@@ -43,20 +43,67 @@
       <lucide-icon [img]="Search" size="18"></lucide-icon>
     </button>
     
-    <button 
-      tuiButton 
-      type="button" 
-      appearance="flat" 
-      size="s" 
-      class="nav-action notification-btn"
-      title="Уведомления">
-      <lucide-icon [img]="Bell" size="18"></lucide-icon>
-      @if(notificationCount > 0) {
-        <span class="notification-badge">
-          {{ notificationCount > 99 ? '99+' : notificationCount }}
-        </span>
+    <div class="notification-wrapper" #notificationWrapper>
+      <button 
+        tuiButton 
+        type="button" 
+        appearance="flat" 
+        size="s" 
+        class="nav-action notification-btn"
+        [class.active]="isNotificationDropdownOpen"
+        (click)="toggleNotificationDropdown()"
+        title="Уведомления">
+        <lucide-icon [img]="Bell" size="18"></lucide-icon>
+        @if(unreadCount > 0) {
+          <span class="notification-badge">
+            {{ unreadCount > 99 ? '99+' : unreadCount }}
+          </span>
+        }
+      </button>
+      
+      @if(isNotificationDropdownOpen) {
+        <div class="notification-dropdown">
+          <div class="notification-header">
+            <h3 class="notification-title">Уведомления</h3>
+            @if(unreadCount > 0) {
+              <button 
+                tuiButton 
+                type="button" 
+                appearance="flat" 
+                size="xs"
+                class="mark-all-read-btn"
+                (click)="markAllAsRead()">
+                Прочитать все
+              </button>
+            }
+          </div>
+          
+          <div class="notification-list" tuiScrollbar>
+            @if(notifications.length === 0) {
+              <div class="notification-empty">
+                <p>Нет уведомлений</p>
+              </div>
+            } @else {
+              @for(notification of notifications; track notification.id) {
+                <div 
+                  class="notification-item"
+                  [class.unread]="!notification.isRead"
+                  (click)="onNotificationClick(notification)">
+                  <div class="notification-content">
+                    <h4 class="notification-item-title">{{ notification.title }}</h4>
+                    <p class="notification-item-message">{{ notification.message }}</p>
+                    <span class="notification-item-time">{{ formatDate(notification.createdDate) }}</span>
+                  </div>
+                  @if(!notification.isRead) {
+                    <div class="notification-dot"></div>
+                  }
+                </div>
+              }
+            }
+          </div>
+        </div>
       }
-    </button>
+    </div>
     
     <!-- User Menu -->
     <div class="user-menu">

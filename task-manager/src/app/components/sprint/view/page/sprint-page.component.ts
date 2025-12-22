@@ -54,6 +54,12 @@ export class SprintPageComponent {
     });
   }
 
+  start() {
+    this.service.start(this.sprint()!.id).subscribe(x => {
+      this.loadSprint(this.sprint()!.id);
+    })
+  }
+
   openEdit() {
     const sprint = this.sprint();
     if (!sprint) return;
