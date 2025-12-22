@@ -94,7 +94,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   formatDate(date: Date): string {
-    debugger;
     const notificationDate = new Date(date);
     const now = new Date();
     const diffMs = now.getTime() - notificationDate.getTime();

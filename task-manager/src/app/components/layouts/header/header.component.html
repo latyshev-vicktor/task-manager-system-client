@@ -53,7 +53,7 @@
         [class.active]="isNotificationDropdownOpen"
         (click)="toggleNotificationDropdown()"
         title="Уведомления">
-        <lucide-icon [img]="Bell" size="18"></lucide-icon>
+        <lucide-icon [img]="Bell" size="24"></lucide-icon>
         @if(unreadCount > 0) {
           <span class="notification-badge">
             {{ unreadCount > 99 ? '99+' : unreadCount }}

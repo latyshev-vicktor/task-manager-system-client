@@ -96,8 +96,8 @@
 
 .notification-badge {
   position: absolute;
-  top: -2px;
-  right: -2px;
+  top: 2px;
+  right: 2px;
   background-color: var(--tui-status-negative);
   color: white;
   font-size: 0.625rem;
@@ -116,7 +116,7 @@
   right: 0;
   width: 380px;
   max-height: 500px;
-  //background-color: var(--tui-base-01);
+  background-color: var(--tui-base-01);
   border: 1px solid var(--tui-base-03);
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
