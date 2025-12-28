@@ -244,38 +244,89 @@
   font-weight: 500;
 }
 
+.user-menu {
+  position: relative;
+}
+
 .user-button {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.4rem 0.8rem;
+  
+  &.active {
+    background-color: var(--tui-base-03);
+  }
+
+  .user-avatar {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    padding: 0.4rem 0.8rem;
+    justify-content: center;
+    background-color: var(--tui-primary-bg);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+  }
 
-    .user-avatar {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: var(--tui-primary-bg);
-      border-radius: 50%;
-      width: 32px;
-      height: 32px;
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.2;
+
+    .user-name {
+      font-weight: 600;
     }
 
-    .user-info {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      line-height: 1.2;
-
-      .user-name {
-        font-weight: 600;
-      }
-
-      .user-role {
-        font-size: 0.75rem;
-        color: var(--tui-text-03);
-      }
+    .user-email {
+      font-size: 0.75rem;
+      color: var(--tui-text-03);
     }
   }
+}
+
+.user-menu-dropdown {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  min-width: 200px;
+  background-color: var(--tui-base-01, #ffffff);
+  background: var(--tui-base-01, #ffffff);
+  border: 1px solid var(--tui-base-03);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  opacity: 1 !important;
+  backdrop-filter: none;
+  padding: 0.5rem;
+}
+
+.user-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  justify-content: flex-start;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  
+  &:hover {
+    background-color: var(--tui-base-02);
+  }
+  
+  span {
+    font-size: 0.875rem;
+  }
+}
+
+.user-menu-divider {
+  height: 1px;
+  background-color: var(--tui-base-03);
+  margin: 0.25rem 0;
+}
 
 /* User Menu */
 // .user-menu {

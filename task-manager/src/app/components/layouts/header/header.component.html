@@ -106,13 +106,15 @@
     </div>
     
     <!-- User Menu -->
-    <div class="user-menu">
+    <div class="user-menu" #userMenuWrapper>
       <button 
         tuiButton
         type="button" 
         appearance="primary" 
         size="l" 
-        class="user-button">
+        class="user-button"
+        [class.active]="isUserMenuOpen"
+        (click)="toggleUserMenu()">
         <div class="user-avatar">
           <lucide-icon [img]="User" size="20"></lucide-icon>
         </div>
@@ -122,6 +124,32 @@
         </div>
         <lucide-icon [img]="ChevronDown" size="16" class="user-dropdown-icon"></lucide-icon>
       </button>
+      
+      @if(isUserMenuOpen) {
+        <div class="user-menu-dropdown">
+          <button 
+            tuiButton 
+            type="button" 
+            appearance="flat" 
+            size="m"
+            class="user-menu-item"
+            (click)="navigateToProfile()">
+            <lucide-icon [img]="Settings" size="18"></lucide-icon>
+            <span>Профиль</span>
+          </button>
+          <div class="user-menu-divider"></div>
+          <button 
+            tuiButton 
+            type="button" 
+            appearance="flat" 
+            size="m"
+            class="user-menu-item"
+            (click)="logout()">
+            <lucide-icon [img]="LogOut" size="18"></lucide-icon>
+            <span>Выйти</span>
+          </button>
+        </div>
+      }
     </div>
   </div>
 </header>

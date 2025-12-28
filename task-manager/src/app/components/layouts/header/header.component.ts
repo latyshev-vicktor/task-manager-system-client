@@ -1,7 +1,8 @@
 import { CommonModule } from "@angular/common";
 import { Component, computed, EventEmitter, inject, Input, Output, output, OnInit, OnDestroy, HostListener, ElementRef, ViewChild } from "@angular/core";
+import { Router } from "@angular/router";
 import { TuiButton, TuiScrollbar } from "@taiga-ui/core";
-import { LucideAngularModule, Menu, Search, Bell, Plus, ChevronDown, ChevronRight, User } from 'lucide-angular';
+import { LucideAngularModule, Menu, Search, Bell, Plus, ChevronDown, ChevronRight, User, Settings, LogOut } from 'lucide-angular';
 import { AuthStore } from "../../../services/auth.store";
 import { NotificationStore } from "../../../services/notification.store";
 import { NotificationModel } from "../../../models/notification/notification.model";
@@ -30,18 +31,23 @@ export class HeaderComponent implements OnInit, OnDestroy {
   readonly ChevronDown = ChevronDown;
   readonly ChevronRight = ChevronRight;
   readonly User = User;
+  readonly Settings = Settings;
+  readonly LogOut = LogOut;
 
   breadcrumbs: string[] = []; // Можно будет заполнить через роутер
   
   notifications: NotificationModel[] = [];
   unreadCount = 0;
   isNotificationDropdownOpen = false;
+  isUserMenuOpen = false;
   
   @ViewChild('notificationWrapper', { static: false }) notificationWrapper?: ElementRef;
+  @ViewChild('userMenuWrapper', { static: false }) userMenuWrapper?: ElementRef;
   
   private destroy$ = new Subject<void>();
   private auth = inject(AuthStore);
   private notificationStore = inject(NotificationStore);
+  private router = inject(Router);
   
   readonly user$ = this.auth.user$;
   readonly notifications$ = this.notificationStore.notifications$;
@@ -114,12 +120,32 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
 
+  toggleUserMenu(): void {
+    this.isUserMenuOpen = !this.isUserMenuOpen;
+  }
+
+  navigateToProfile(): void {
+    this.router.navigate(['/profile']);
+    this.isUserMenuOpen = false;
+  }
+
+  logout(): void {
+    this.auth.logout();
+    this.isUserMenuOpen = false;
+  }
+
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {
     if (this.isNotificationDropdownOpen && 
         this.notificationWrapper && 
         !this.notificationWrapper.nativeElement.contains(event.target)) {
       this.isNotificationDropdownOpen = false;
+    }
+    
+    if (this.isUserMenuOpen && 
+        this.userMenuWrapper && 
+        !this.userMenuWrapper.nativeElement.contains(event.target)) {
+      this.isUserMenuOpen = false;
     }
   }
 }
