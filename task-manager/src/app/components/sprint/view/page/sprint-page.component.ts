@@ -1,7 +1,7 @@
 import { CommonModule, DatePipe } from "@angular/common";
 import { Component, inject, OnInit, signal } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { TuiButton, TuiDialogService, TuiTitle } from "@taiga-ui/core";
+import { TuiAlertService, TuiButton, TuiDialogService, TuiTitle } from "@taiga-ui/core";
 import { TuiBadge, TuiStatus, TuiTabs, TuiTab, TuiAccordion } from "@taiga-ui/kit";
 import { TuiCardLarge, TuiHeader } from "@taiga-ui/layout";
 import { SprintService } from "../../../../services/sprint-service";
@@ -37,6 +37,8 @@ export class SprintPageComponent {
   private route = inject(ActivatedRoute);
   private service = inject(SprintService);
   private dialogs = inject(TuiDialogService);
+  private alerts = inject(TuiAlertService);
+
   private readonly dialogContent = new PolymorpheusComponent(EditSprintDialogComponent);
 
   sprint = signal<SprintModel | null>(null);
@@ -57,6 +59,12 @@ export class SprintPageComponent {
   start() {
     this.service.start(this.sprint()!.id).subscribe(x => {
       this.loadSprint(this.sprint()!.id);
+    }, error => {
+      const errorMessage = error?.error?.message;
+      this.alerts.open(errorMessage, {
+        label: 'Ошибка',
+        appearance: 'negative'
+      }).subscribe()
     })
   }
 

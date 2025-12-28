@@ -116,7 +116,8 @@
   right: 0;
   width: 380px;
   max-height: 500px;
-  background-color: var(--tui-base-01);
+  background-color: var(--tui-base-01, #ffffff);
+  background: var(--tui-base-01, #ffffff);
   border: 1px solid var(--tui-base-03);
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -124,6 +125,8 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  opacity: 1 !important;
+  backdrop-filter: none;
 }
 
 .notification-header {

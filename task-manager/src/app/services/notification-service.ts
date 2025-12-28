@@ -16,7 +16,7 @@ export class NotificationService {
     return this.http.get<number>(`${this._baseUrl}/unread-count`);
   }
 
-  markAsRead(id: number): Observable<void> {
+  markAsRead(id: string): Observable<void> {
     return this.http.patch<void>(`${this._baseUrl}/${id}/read`, {});
   }
 
@@ -24,4 +24,6 @@ export class NotificationService {
     return this.http.patch<void>(`${this._baseUrl}/read-all`, {});
   }
 }
+
+
 

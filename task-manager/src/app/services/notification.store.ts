@@ -72,7 +72,7 @@ export class NotificationStore {
     });
   }
 
-  markAsRead(id: number) {
+  markAsRead(id: string) {
     this.notificationService.markAsRead(id).pipe(
       tap(() => {
         store.update(state => {
@@ -107,4 +107,6 @@ export class NotificationStore {
     ).subscribe();
   }
 }
+
+
 
