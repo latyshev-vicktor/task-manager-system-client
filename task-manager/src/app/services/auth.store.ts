@@ -5,6 +5,7 @@ import { UserShortModel } from '../models/user/user-short.model';
 import { AuthService } from './auth-service';
 import { UserService } from './user-service';
 import { tap } from 'rxjs';
+import { NotificationHubService } from './notification-hub-service';
 
 interface AuthState {
   accessToken: string | null;
@@ -30,6 +31,7 @@ export const persist = persistState(store, {
 export class AuthStore {
   private authService = inject(AuthService);
   private userService = inject(UserService);
+  private notificationHub = inject(NotificationHubService);
 
   auth$ = store.pipe(select(state => state)); // реактивный поток
   user$ = store.pipe(select(state => state.user));
@@ -48,6 +50,8 @@ export class AuthStore {
           isAuthenticated: true
         }));
 
+        this.notificationHub.connect(res.accessToken);
+
         // подгружаем юзера
         this.userService.getShortInformation().subscribe(user => {
           store.update(s => ({ ...s, user }));
@@ -63,7 +67,9 @@ export class AuthStore {
   }
 
   logout() {
-    this.authService.logout();
-    store.reset();
+    this.authService.logout().subscribe(() => {
+      debugger;
+      store.reset();
+    });
   }
 }

@@ -1,0 +1,164 @@
+<div class="profile-container">
+  <header tuiHeader>
+    <h1 tuiTitle>Профиль пользователя</h1>
+  </header>
+
+  <div class="profile-content">
+    <!-- Профиль пользователя -->
+    <div tuiCardLarge class="profile-card">
+      <div class="card-header">
+        <div class="header-icon">
+          <lucide-icon [img]="User" size="24"></lucide-icon>
+        </div>
+        <h2 class="card-title">Личная информация</h2>
+      </div>
+
+      @if(isLoading()) {
+        <div class="loader-wrapper">
+          <tui-loader [showLoader]="true" size="l"></tui-loader>
+        </div>
+      } @else {
+        <form [formGroup]="profileForm" class="profile-form">
+          <div class="form-row">
+            <div class="form-group">
+              <tui-textfield
+                [tuiTextfieldCleaner]="true"
+                tuiTextfieldSize="l">
+                <label tuiLabel>Имя *</label>
+                <input formControlName="firstName" tuiTextfield placeholder="Введите имя" />
+              </tui-textfield>
+              <tui-error
+                formControlName="firstName"
+                [error]="[] | tuiFieldError | async">
+              </tui-error>
+            </div>
+
+            <div class="form-group">
+              <tui-textfield
+                [tuiTextfieldCleaner]="true"
+                tuiTextfieldSize="l">
+                <label tuiLabel>Фамилия *</label>
+                <input formControlName="lastName" tuiTextfield placeholder="Введите фамилию" />
+              </tui-textfield>
+              <tui-error
+                formControlName="lastName"
+                [error]="[] | tuiFieldError | async">
+              </tui-error>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <tui-textfield
+                [tuiTextfieldCleaner]="true"
+                tuiTextfieldSize="l">
+                <label tuiLabel>Имя пользователя *</label>
+                <input formControlName="userName" tuiTextfield placeholder="Введите имя пользователя" />
+              </tui-textfield>
+              <tui-error
+                formControlName="userName"
+                [error]="[] | tuiFieldError | async">
+              </tui-error>
+            </div>
+
+            <div class="form-group">
+              <tui-textfield
+                [tuiTextfieldCleaner]="true"
+                tuiTextfieldSize="l">
+                <lucide-icon [img]="Mail" size="18"></lucide-icon>
+                <label tuiLabel>Email *</label>
+                <input formControlName="email" tuiTextfield type="email" placeholder="Введите email" />
+              </tui-textfield>
+              <tui-error
+                formControlName="email"
+                [error]="[] | tuiFieldError | async">
+              </tui-error>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <tui-textfield
+                [tuiTextfieldCleaner]="true"
+                tuiTextfieldSize="l">
+                <lucide-icon [img]="Phone" size="18"></lucide-icon>
+                <label tuiLabel>Телефон</label>
+                <input formControlName="phone" tuiTextfield type="tel" placeholder="Введите телефон" />
+              </tui-textfield>
+            </div>
+
+            <div class="form-group">
+              <tui-textfield>
+                <label tuiLabel>Дата рождения *</label>
+                <input
+                  tuiInputDate
+                  formControlName="birthDay"/>
+                <tui-calendar *tuiTextfieldDropdown />
+              </tui-textfield>
+              <tui-error
+                formControlName="birthDay"
+                [error]="[] | tuiFieldError | async">
+              </tui-error>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button
+              tuiButton
+              type="button"
+              appearance="primary"
+              size="m"
+              [disabled]="isSaving() || profileForm.invalid"
+              (click)="saveProfile()">
+              <lucide-icon [img]="Save" size="18"></lucide-icon>
+              Сохранить профиль
+            </button>
+          </div>
+        </form>
+      }
+    </div>
+
+    <!-- Настройки уведомлений -->
+    <div tuiCardLarge class="notification-settings-card">
+      <div class="card-header">
+        <div class="header-icon">
+          <lucide-icon [img]="Bell" size="24"></lucide-icon>
+        </div>
+        <h2 class="card-title">Настройки уведомлений</h2>
+      </div>
+      <form [formGroup]="notificationSettingsForm" class="notification-form">
+        <div class="settings-section">
+          <h3 class="settings-section-title">Способы получения уведомлений</h3>
+          <div class="switch-group">
+            Получать уведомления по Email
+            <input
+            tuiSwitch
+            type="checkbox"
+            formControlName="enableEmail"/>
+          </div>
+          <div class="switch-group">
+            Получать уведомления через SignalR (в реальном времени)
+            <input
+            tuiSwitch
+            type="checkbox"
+            formControlName="enableSignalR"/>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button
+            tuiButton
+            type="button"
+            appearance="primary"
+            size="m"
+            [disabled]="isSettingsSaving()"
+            (click)="saveNotificationSettings()">
+            <lucide-icon [img]="Save" size="18"></lucide-icon>
+            Сохранить настройки
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+

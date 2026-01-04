@@ -55,6 +55,18 @@ export class SprintPageComponent {
     });
   }
 
+  start() {
+    this.service.startSprint(this.sprint()!.id).subscribe(x => {
+      this.loadSprint();
+    }, error => {
+      const errorMessage = error?.error?.message;
+      this.alerts.open(errorMessage, {
+        label: 'Ошибка',
+        appearance: 'negative'
+      }).subscribe()
+    })
+  }
+
   openEdit() {
     const sprint = this.sprint();
     if (!sprint) return;
