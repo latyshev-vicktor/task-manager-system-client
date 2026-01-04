@@ -1,9 +1,9 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { LayoutComponent } from "./components/layouts/layout/layout.component";
 import { TuiRoot } from '@taiga-ui/core';
 import { AuthService } from './services/auth-service';
-import { NotificationHubService } from './services/notification-hub-service';
+import { SignalRService } from './services/signalR-service';
 
 @Component({
   selector: 'app-root',
@@ -15,15 +15,20 @@ import { NotificationHubService } from './services/notification-hub-service';
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App implements OnInit {
+export class App implements OnInit, OnDestroy {
   title = 'task-manager';
-  private authService = inject(AuthService);
-  private notificationHub = inject(NotificationHubService);
+  authService = inject(AuthService);
+  signalRService = inject(SignalRService);
 
   ngOnInit(): void {
-    const token = this.authService.getAccessToken();
-    if (token) {
-      this.notificationHub.connect(token);
-    }
+    this.authService.tokenChanges$.subscribe(token => {
+      if(token) {
+        this.signalRService.startConnection(token);
+      }
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.signalRService.stopConnection();
   }
 }
