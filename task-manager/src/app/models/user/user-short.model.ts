@@ -1,5 +1,5 @@
 export interface UserShortModel {
-  userId: string;
+  userId: number;
   createdDate: Date
   userName: string;
   firstName: string;

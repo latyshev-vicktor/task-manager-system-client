@@ -1,24 +1,34 @@
 export interface UserProfileModel {
-  userId: string;
-  createdDate: Date;
+  id: number;
   userName: string;
   firstName: string;
   lastName: string;
   email: string;
-  phone?: string;
-  position?: string;
-  department?: string;
+  phone: string;
+  birthDay: Date;
 }
 
-export interface NotificationSettingsModel {
+export interface UserNotificationProfileModel {
+  id: string;
   userId: string;
-  emailEnabled: boolean;
-  signalREnabled: boolean;
-  taskAssigned: boolean;
-  taskCompleted: boolean;
-  taskUpdated: boolean;
-  sprintCreated: boolean;
-  sprintUpdated: boolean;
-  commentAdded: boolean;
+  enableEmail: boolean;
+  enableSignalR: boolean;
+  email: string;
+  createdDate: Date;
 }
 
+export interface UpdatedUserNotificationProfileModel {
+  id: string;
+  userId: string;
+  enableEmail: boolean;
+  enableSignalR: boolean;
+}
+
+export interface UpdateUserProfileModel {
+  id: number;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  phone?: string;
+  userName?: string;
+}

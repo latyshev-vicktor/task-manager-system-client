@@ -67,7 +67,9 @@ export class AuthStore {
   }
 
   logout() {
-    this.authService.logout();
-    store.reset();
+    this.authService.logout().subscribe(() => {
+      debugger;
+      store.reset();
+    });
   }
 }
