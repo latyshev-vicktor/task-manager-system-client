@@ -3,7 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { LayoutComponent } from "./components/layouts/layout/layout.component";
 import { TuiRoot } from '@taiga-ui/core';
 import { AuthService } from './services/auth-service';
-import { SignalRService } from './services/signalR-service';
+import { NotificationHubService } from './services/notification-hub-service';
 
 @Component({
   selector: 'app-root',
@@ -15,20 +15,20 @@ import { SignalRService } from './services/signalR-service';
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App implements OnInit, OnDestroy {
+export class App implements OnInit {
   title = 'task-manager';
-  authService = inject(AuthService);
-  signalRService = inject(SignalRService);
+  private authService = inject(AuthService);
+  private notificationHubService = inject(NotificationHubService);
 
   ngOnInit(): void {
     this.authService.tokenChanges$.subscribe(token => {
       if(token) {
-        this.signalRService.startConnection(token);
+        this.notificationHubService.connect(token);
       }
     })
   }
 
   ngOnDestroy(): void {
-    this.signalRService.stopConnection();
+    this.notificationHubService.disconnect();
   }
 }
