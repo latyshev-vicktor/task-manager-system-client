@@ -1,5 +1,5 @@
 export interface UserProfileModel {
-  id: number;
+  id: string;
   userName: string;
   firstName: string;
   lastName: string;
@@ -25,7 +25,7 @@ export interface UpdatedUserNotificationProfileModel {
 }
 
 export interface UpdateUserProfileModel {
-  id: number;
+  id: string;
   firstName?: string;
   lastName?: string;
   email?: string;

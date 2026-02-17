@@ -1,5 +1,5 @@
 export interface BaseFilterModel {
-  id?: number;
+  id?: string;
   skip: number;
   take: number;
   sortBy: string;

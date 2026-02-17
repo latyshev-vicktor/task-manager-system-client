@@ -3,7 +3,7 @@ import { BaseModel } from "../base.model";
 import { FieldActivityForSprintModel } from "../field-activity/field-activity.model";
 
 export interface SprintModel extends BaseModel {
-  userId: number;
+  userId: string;
   name: string;
   description: string;
   startDate: Date;
@@ -25,11 +25,11 @@ export interface CreateSprintModel {
 }
 
 export interface SprintFilterModel extends BaseFilterModel {
-  userId?: number;
+  userId?: string;
   name?: string;
   description?: string;
   startDate?: string;
   endDate: string;
-  fieldActivityId?: number;
+  fieldActivityId?: string;
   fieldActivityIds?: [];
 }

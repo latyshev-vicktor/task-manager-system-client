@@ -3,7 +3,7 @@ import { SprintModel } from "../sprint/sprint.model";
 import { TaskModel } from "../task/task.model";
 
 export interface SprintWeekModel extends BaseModel {
-  sprintId: number;
+  sprintId: string;
   sprint?: SprintModel;
   weekNumber: number;
   startDate: Date;

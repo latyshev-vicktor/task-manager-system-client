@@ -23,7 +23,7 @@ import { TargetItemComponent } from './target-item/target-item.component';
   styleUrl: './target-list.component.scss'
 })
 export class TargetsListComponent implements OnInit {
-  sprintId = input.required<number>();
+  sprintId = input.required<string>();
   targets: TargetModel[] = [];
 
   private dialogs = inject(TuiDialogService);
