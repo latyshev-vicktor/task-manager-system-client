@@ -31,7 +31,7 @@ import { firstValueFrom, Observable } from 'rxjs';
   ]
 })
 export class TaskEditDialogComponent implements OnInit {
-  private readonly context = inject<TuiDialogContext<number | null, { targetId: number; task?: TaskModel }>>(POLYMORPHEUS_CONTEXT);
+  private readonly context = inject<TuiDialogContext<string | null, { targetId: string; task?: TaskModel }>>(POLYMORPHEUS_CONTEXT);
   private readonly alerts = inject(TuiAlertService);
   private readonly taskService = inject(TaskService);
 
@@ -57,7 +57,7 @@ export class TaskEditDialogComponent implements OnInit {
     const { name, description } = this.form.getRawValue();
     const { targetId, task } = this.context.data;
 
-    let observable: Observable<number>;
+    let observable: Observable<string>;
     let successMessage = this.isNew ? 'Задача создана!' : 'Задача обновлена!'
     if(this.isNew) {
       observable = this.taskService.create({name, description, targetId});

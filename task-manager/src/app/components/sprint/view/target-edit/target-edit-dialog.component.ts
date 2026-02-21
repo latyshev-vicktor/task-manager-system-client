@@ -1,8 +1,7 @@
-import { Component, inject, Input, Output, EventEmitter, signal, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { TuiButton, TuiTextfield, TuiDialogService, TuiDialogContext, TuiAlertService, TuiError, TUI_DARK_MODE_KEY } from '@taiga-ui/core';
-import { TuiForm } from '@taiga-ui/layout';
-import { CreateTargetModel, TargetModel } from '../../../../models/target/target.model';
+import { TuiButton, TuiTextfield, TuiDialogContext, TuiAlertService, TuiError } from '@taiga-ui/core';
+import { TargetModel } from '../../../../models/target/target.model';
 import { POLYMORPHEUS_CONTEXT } from '@taiga-ui/polymorpheus';
 import { TargetService } from '../../../../services/target-service';
 import { TuiFieldErrorPipe, tuiValidationErrorsProvider } from '@taiga-ui/kit';
@@ -30,7 +29,7 @@ import { firstValueFrom } from 'rxjs';
   ]
 })
 export class TargetEditDialogComponent implements OnInit {
-  private readonly context = inject<TuiDialogContext<number | null, TargetModel | null>>(POLYMORPHEUS_CONTEXT);
+  private readonly context = inject<TuiDialogContext<string | null, TargetModel | null>>(POLYMORPHEUS_CONTEXT);
   private readonly alerts = inject(TuiAlertService);
   private readonly targetService = inject(TargetService);
 

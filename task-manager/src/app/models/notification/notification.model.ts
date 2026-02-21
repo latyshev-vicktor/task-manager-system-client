@@ -5,7 +5,7 @@ export interface NotificationModel {
   title: string;
   message: string;
   isRead: boolean;
-  userId: number;
+  userId: string;
   createdDate: Date;
 }
 

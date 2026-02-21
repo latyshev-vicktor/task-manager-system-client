@@ -5,7 +5,7 @@ export interface TaskModel extends BaseModel {
   name: string;
   description: string;
   status: TaskStatus;
-  targetId: number;
+  targetId: string;
   target?: TargetModel;
 }
 
@@ -17,5 +17,5 @@ export interface TaskStatus {
 export interface CreateTaskModel {
   name: string;
   description: string;
-  targetId?: number;
+  targetId?: string;
 }

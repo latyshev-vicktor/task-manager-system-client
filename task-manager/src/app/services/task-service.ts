@@ -8,23 +8,23 @@ export class TaskService {
   private readonly _baseUrl = "/tasks-service/api/task";
   private readonly http = inject(HttpClient);
   
-  create(model: CreateTaskModel): Observable<number> {
-    return this.http.post<number>(`${this._baseUrl}`, model);
+  create(model: CreateTaskModel): Observable<string> {
+    return this.http.post<string>(`${this._baseUrl}`, model);
   }
 
-  update(model: TaskModel): Observable<number> {
-    return this.http.put<number>(`${this._baseUrl}`, model);
+  update(model: TaskModel): Observable<string> {
+    return this.http.put<string>(`${this._baseUrl}`, model);
   }
 
-  complete(id: number) : Observable<void> {
+  complete(id: string) : Observable<void> {
     return this.http.patch<void>(`${this._baseUrl}/${id}/complete`, {})
   }
 
-  setCreatedStatus(id: number) : Observable<void> {
+  setCreatedStatus(id: string) : Observable<void> {
     return this.http.patch<void>(`${this._baseUrl}/${id}/set-created`, {});
   }
 
-  delete(id: number): Observable<void> {
+  delete(id: string): Observable<void> {
     return this.http.delete<void>(`${this._baseUrl}/${id}`);
   }
 }

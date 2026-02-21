@@ -19,23 +19,23 @@ export class SprintService {
     return this.http.post<any>(`${this._baseUrl}/search`, filter);
   }
 
-  getById(id: number) : Observable<SprintModel | null> {
+  getById(id: string) : Observable<SprintModel | null> {
     return this.http.get<SprintModel | null>(`${this._baseUrl}/${id}`);
   }
 
-  getTargetsBySprintId(sprintId: number) : Observable<TargetModel[]> {
+  getTargetsBySprintId(sprintId: string) : Observable<TargetModel[]> {
     return this.http.get<TargetModel[] | []>(`${this._baseUrl}/${sprintId}/targets`)
   }
 
-  getWeeksBySprintId(sprintId: number) : Observable<SprintWeekModel[]> {
+  getWeeksBySprintId(sprintId: string) : Observable<SprintWeekModel[]> {
     return this.http.get<SprintWeekModel[] | []>(`${this._baseUrl}/${sprintId}/weeks`)
   }
 
-  update(model: Partial<SprintModel>): Observable<number> {
-    return this.http.put<number>(`${this._baseUrl}`, model);
+  update(model: Partial<SprintModel>): Observable<string> {
+    return this.http.put<string>(`${this._baseUrl}`, model);
   }
 
-  startSprint(id: number) : Observable<void> {
+  startSprint(id: string) : Observable<void> {
     return this.http.patch<void>(`${this._baseUrl}/${id}/start-sprint`, {});
   }
 }

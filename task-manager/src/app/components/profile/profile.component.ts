@@ -62,7 +62,7 @@ export class ProfileComponent implements OnInit {
   isSettingsSaving = signal(false);
 
   profileForm = new FormGroup({
-    id: new FormControl(0, Validators.required),
+    id: new FormControl('', Validators.required),
     firstName: new FormControl('', [Validators.required]),
     lastName: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),

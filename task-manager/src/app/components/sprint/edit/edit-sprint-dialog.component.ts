@@ -121,7 +121,6 @@ export class EditSprintDialogComponent implements OnInit {
           appearance: 'positive',
         });
       
-      debugger;
       this.context.completeWith(null);
     }, error => {
       const errorMessage = error?.error?.message ?? 'Неизвестная ошибка';

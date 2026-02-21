@@ -8,11 +8,11 @@ export class TargetService {
   private readonly _baseUrl = "/tasks-service/api/target";
   private readonly http = inject(HttpClient);
   
-  create(model: CreateTargetModel) : Observable<number> {
-    return this.http.post<number>(`${this._baseUrl}`, model);
+  create(model: CreateTargetModel) : Observable<string> {
+    return this.http.post<string>(`${this._baseUrl}`, model);
   }
 
-  update(model: TargetModel) : Observable<number> {
-    return this.http.put<number>(`${this._baseUrl}`, model);
+  update(model: TargetModel) : Observable<string> {
+    return this.http.put<string>(`${this._baseUrl}`, model);
   }
 }

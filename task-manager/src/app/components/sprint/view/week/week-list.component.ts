@@ -23,12 +23,12 @@ import { TaskModel } from '../../../../models/task/task.model';
   styleUrls: ['./week-list.component.scss'],
 })
 export class WeeksListComponent implements OnInit {
-  sprintId = input.required<number>();
+  sprintId = input.required<string>();
   spintService = inject(SprintService);
   alerts = inject(TuiAlertService);
 
   weeks: SprintWeekModel[] = [];
-  receivingWeekId: number | null = null;
+  receivingWeekId: string | null = null;
 
   ngOnInit(): void {
     this.loadWeeks();
@@ -40,7 +40,7 @@ export class WeeksListComponent implements OnInit {
     })
   }
 
-  isReceiving(weekId: number): boolean {
+  isReceiving(weekId: string): boolean {
     return this.receivingWeekId === weekId;
   }
 

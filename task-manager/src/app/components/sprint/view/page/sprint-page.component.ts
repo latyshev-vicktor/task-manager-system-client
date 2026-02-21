@@ -1,6 +1,6 @@
 import { SprintService } from './../../../../services/sprint-service';
 import { CommonModule, DatePipe } from "@angular/common";
-import { Component, inject, OnInit, signal } from "@angular/core";
+import { Component, inject, signal } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { TuiAlertService, TuiButton, TuiDialogService, TuiTitle } from "@taiga-ui/core";
 import { TuiBadge, TuiStatus, TuiTabs, TuiTab, TuiAccordion, TUI_CONFIRM } from "@taiga-ui/kit";

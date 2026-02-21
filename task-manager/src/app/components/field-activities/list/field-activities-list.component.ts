@@ -5,7 +5,7 @@ import { TuiCardMedium } from '@taiga-ui/layout';
 import { FieldActivityModel } from '../../../models/field-activity/field-activity.model';
 import { FieldActivityService } from '../../../services/field-activity-service';
 import { LucideAngularModule, Plus, Edit, Trash2 } from 'lucide-angular';
-import {TUI_CONFIRM, type TuiConfirmData} from '@taiga-ui/kit';
+import {TUI_CONFIRM} from '@taiga-ui/kit';
 import { FieldActivityDialogComponent } from '../view/field-activity-dialog.component';
 import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 
@@ -51,7 +51,7 @@ export class FieldActivitiesListComponent implements OnInit {
     });
   }
 
-  deleteFieldActivity(id: number, name: string) {
+  deleteFieldActivity(id: string, name: string) {
     const message = `<div>Вы уверены что хотите удалить Сферу деятельности <strong>${name}</strong>.</div>`;
     this.dialogs.open<boolean>(
       TUI_CONFIRM, {

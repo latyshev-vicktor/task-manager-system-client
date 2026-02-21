@@ -12,15 +12,15 @@ export class FieldActivityService {
     return this.http.get<FieldActivityModel[]>(`${this._baseUrl}/my`);
   }
 
-  create(name: string | null) : Observable<number> {
-    return this.http.post<number>(`${this._baseUrl}`, {name: name});
+  create(name: string | null) : Observable<string> {
+    return this.http.post<string>(`${this._baseUrl}`, {name: name});
   }
 
-  update(model: FieldActivityModel) : Observable<number> {
-    return this.http.put<number>(`${this._baseUrl}`, model);
+  update(model: FieldActivityModel) : Observable<string> {
+    return this.http.put<string>(`${this._baseUrl}`, model);
   }
 
-  delete(id: number) : Observable<void> {
+  delete(id: string) : Observable<void> {
     return this.http.delete<void>(`${this._baseUrl}/${id}`);
   }
 }
